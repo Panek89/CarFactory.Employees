@@ -2,4 +2,6 @@
 
 public class Factory
 {
+    public required string ProductionLine { get; set; }
+    // Address ?
 }
