@@ -7,6 +7,7 @@ This document describes Achitecture Decision Record for Employees microservice.
 1. [Main Technology](#main-technology)
 2. [ORM](#orm)
 3. [Database](#database)
+4. [Repositories](#repositories)
 
 ## Main Technology
 
@@ -99,3 +100,30 @@ Positive:
 Negative:
 - In some scenarios non-relational DB is much faster.
 - PostgreSQL is free to use without any restrictions.
+
+## Repositories
+
+[Back to table of contents](#table-of-contents)
+
+### Status
+- Proposed
+
+### Context
+We need a design breakdown of the instrastructure application layer that:
+- Will be separated from other layers
+- It will be easy swap to another ORM if needed
+- Easily expandable
+- Easily testable
+
+### Decision
+Proposed - Repository Pattern with UOW
+TBD
+
+### Consequences
+
+Positive:
+- Sharing for repetitive operations between different entities
+- Better segregation for individual entities
+
+Negative:
+- A great deal of opinion is against the use of the repository pattern along with EF Core.
