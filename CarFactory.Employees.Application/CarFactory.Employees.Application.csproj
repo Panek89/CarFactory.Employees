@@ -14,4 +14,8 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarFactory.Employees.SharedLibrary\CarFactory.Employees.SharedLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

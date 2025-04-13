@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../CarFactory.Employees.Application/CarFactory.Employees.Application.csproj" />
+    <ProjectReference Include="..\CarFactory.Employees.SharedLibrary\CarFactory.Employees.SharedLibrary.csproj" />
   </ItemGroup>
 
 </Project>
