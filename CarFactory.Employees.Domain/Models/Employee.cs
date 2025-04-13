@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using CarFactory.Employees.SharedLibrary.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarFactory.Employees.Domain.Models;
 
@@ -7,9 +8,11 @@ public class Employee : BaseEntity
     private DateTime _employmentStartDate;
     private DateTime? _employmentEndDate;
 
-
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
+    public required string PersonalId { get; set; }
+    public bool IsEmployed { get; set; }
+
     public DateTime EmploymentStartDate 
     { 
         get { return _employmentStartDate; }  
