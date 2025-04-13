@@ -15,11 +15,10 @@ namespace CarFactory.Employees.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpPost("register-employee-request")]
+        [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult RegisterEmployeeRequest(RegisterEmployeeRequestQuery query)
+        public IActionResult Register(RegisterEmployeeRequestQuery query)
         {
 
             return Ok();
