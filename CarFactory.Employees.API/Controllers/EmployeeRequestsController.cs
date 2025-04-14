@@ -1,4 +1,5 @@
 ﻿using CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
+using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,10 +19,9 @@ namespace CarFactory.Employees.API.Controllers
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Register(RegisterEmployeeRequestQuery query)
+        public async Task<EmployeeRequestDto> Register(RegisterEmployeeRequestQuery query)
         {
-
-            return Ok();
+            return await _mediator.Send(query);
         }
     }
 }
