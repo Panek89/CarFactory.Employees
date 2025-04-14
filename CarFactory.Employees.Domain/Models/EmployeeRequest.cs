@@ -8,5 +8,5 @@ public class EmployeeRequest : BaseEntity
     public required string Business { get; set; }
     public DateTime StartDate { get; set; }
     public EmployeeRequestStatus Status { get; set; }
-    public IEnumerable<EmployeeRequestCandidate> Candidates { get; set; } = [];
+    public ICollection<EmployeeRequestCandidate> Candidates { get; set; } = [];
 }
