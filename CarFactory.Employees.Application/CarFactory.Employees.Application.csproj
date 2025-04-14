@@ -7,14 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features/EmployeeRequests/Queries/" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarFactory.Employees.Infrastructure\CarFactory.Employees.Infrastructure.csproj" />
     <ProjectReference Include="..\CarFactory.Employees.SharedLibrary\CarFactory.Employees.SharedLibrary.csproj" />
   </ItemGroup>
 
