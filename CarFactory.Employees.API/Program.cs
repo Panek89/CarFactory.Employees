@@ -1,3 +1,4 @@
+using CarFactory.Employees.Application;
 using CarFactory.Employees.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure();
 builder.Services.AddDatabase(builder.Configuration.GetConnectionString("SQLSERVER")!);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
