@@ -19,17 +19,31 @@ namespace CarFactory.Employees.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<EmployeeRequestDto>> GetAll()
+        public async Task<IEnumerable<EmployeeRequestDto>> GetAll(CancellationToken token)
         {
-            return await _mediator.Send(new GetEmployeeRequestsQuery());
+            return await _mediator.Send(new GetEmployeeRequestsQuery(), token);
         }
 
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<EmployeeRequestDto> Register(RegisterEmployeeRequestCommand command)
+        public async Task<EmployeeRequestDto> Register(RegisterEmployeeRequestCommand command, CancellationToken token)
         {
-            return await _mediator.Send(command);
+            return await _mediator.Send(command, token);
+        }
+
+        [HttpPost("assign-candidate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<EmployeeRequestCandidateDto>> AssignCandidate(AssignCandidateToRequestCommand command, CancellationToken token)
+        {
+            var dto = await _mediator.Send(command, token);
+            if (dto is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(dto);
         }
     }
 }
