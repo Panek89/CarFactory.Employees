@@ -19,9 +19,9 @@ namespace CarFactory.Employees.API.Controllers
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<EmployeeRequestDto> Register(RegisterEmployeeRequestQuery query)
+        public async Task<EmployeeRequestDto> Register(RegisterEmployeeRequestCommand command)
         {
-            return await _mediator.Send(query);
+            return await _mediator.Send(command);
         }
     }
 }

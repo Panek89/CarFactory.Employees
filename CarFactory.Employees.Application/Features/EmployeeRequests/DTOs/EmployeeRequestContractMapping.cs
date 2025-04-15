@@ -5,15 +5,15 @@ namespace CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 
 public static class EmployeeRequestContractMapping
 {
-    public static EmployeeRequest MapToEmployeeRequest(this RegisterEmployeeRequestQuery query)
+    public static EmployeeRequest MapToEmployeeRequest(this RegisterEmployeeRequestCommand command)
     {
         return new EmployeeRequest()
         {
             Id = Guid.NewGuid(),
-            NoOfEmployeesNeeded = query.NoOfEmployeesNeeded,
-            Business = query.Business,
-            StartDate = query.StartDate,
-            Status = query.Status,
+            NoOfEmployeesNeeded = command.NoOfEmployeesNeeded,
+            Business = command.Business,
+            StartDate = command.StartDate,
+            Status = command.Status,
             IsDeleted = false,
             CreatedAt = DateTime.UtcNow,
             CreatedBy = "SYSTEM"
