@@ -36,4 +36,38 @@ public static class EmployeeRequestContractMapping
     {
         return employeeRequests.Select(MapToDto);
     }
+
+    public static EmployeeRequestCandidate MapToCandidate(this AssignCandidateToRequestCommand command, EmployeeRequest employeeRequest)
+    {
+        return new EmployeeRequestCandidate()
+        {
+            Id = Guid.NewGuid(),
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            PersonalId = command.PersonalId,
+            Age = command.Age,
+            Status = command.Status,
+            IsDeleted = false,
+            CreatedAt = DateTime.UtcNow,
+            CreatedBy = "SYSTEM",
+            EmployeeRequest = employeeRequest
+        };
+    }
+
+    public static EmployeeRequestCandidateDto MapToDto(this EmployeeRequestCandidate employeeRequestCandidate) 
+    {
+        return new EmployeeRequestCandidateDto()
+        {
+            FirstName = employeeRequestCandidate.FirstName,
+            LastName = employeeRequestCandidate.LastName,
+            PersonalId= employeeRequestCandidate.PersonalId,
+            Age= employeeRequestCandidate.Age,
+            Status = employeeRequestCandidate.Status,
+        };
+    }
+
+    public static IEnumerable<EmployeeRequestCandidateDto> MapToDtos(this IEnumerable<EmployeeRequestCandidate> employeeRequestCandidates)
+    {
+        return employeeRequestCandidates.Select(MapToDto);
+    }
 }
