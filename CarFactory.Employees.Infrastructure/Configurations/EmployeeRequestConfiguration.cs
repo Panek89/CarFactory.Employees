@@ -8,6 +8,8 @@ public class EmployeeRequestConfiguration : IEntityTypeConfiguration<EmployeeReq
 {
     public void Configure(EntityTypeBuilder<EmployeeRequest> builder)
     {
+        builder.ToTable("EmployeeRequests");
+
         builder.HasKey(e => e.Id);
         builder.HasMany(e => e.Candidates)
             .WithOne(c => c.EmployeeRequest)
