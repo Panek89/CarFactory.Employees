@@ -31,4 +31,9 @@ public static class EmployeeRequestContractMapping
             Status = employeeRequest.Status
         };
     }
+
+    public static IEnumerable<EmployeeRequestDto> MapToDtos(this IEnumerable<EmployeeRequest> employeeRequests)
+    {
+        return employeeRequests.Select(MapToDto);
+    }
 }
