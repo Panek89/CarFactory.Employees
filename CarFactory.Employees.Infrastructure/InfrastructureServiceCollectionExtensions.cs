@@ -1,4 +1,5 @@
 ﻿using CarFactory.Employees.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CarFactory.Employees.Infrastructure;
@@ -12,10 +13,10 @@ public static class InfrastructureServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddDatabase(this IServiceCollection services,
-       string connectionString)
+    public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
     {
-        // TODO
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(connectionString));
 
         return services;
     }
