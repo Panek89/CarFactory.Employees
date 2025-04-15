@@ -14,9 +14,9 @@ public class RegisterEmployeeRequestCommandHandler : IRequestHandler<RegisterEmp
         _employeeRequestRepository = employeeRequestRepository ?? throw new ArgumentNullException(nameof(employeeRequestRepository));
     }
 
-    public async Task<EmployeeRequestDto> Handle(RegisterEmployeeRequestCommand query, CancellationToken token)
+    public async Task<EmployeeRequestDto> Handle(RegisterEmployeeRequestCommand command, CancellationToken token)
     {
-        var employeeRequest = query.MapToEmployeeRequest();
+        var employeeRequest = command.MapToEmployeeRequest();
         await _employeeRequestRepository.AddAsync(employeeRequest, token);
         await _employeeRequestRepository.SaveChangesAsync(token);
 
