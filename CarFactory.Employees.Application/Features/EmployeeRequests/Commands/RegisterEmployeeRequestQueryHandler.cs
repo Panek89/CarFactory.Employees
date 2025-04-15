@@ -11,7 +11,7 @@ public class RegisterEmployeeRequestQueryHandler : IRequestHandler<RegisterEmplo
 
     public RegisterEmployeeRequestQueryHandler(IEmployeeRequestRepository employeeRequestRepository)
     {
-        _employeeRequestRepository = employeeRequestRepository;
+        _employeeRequestRepository = employeeRequestRepository ?? throw new ArgumentNullException(nameof(employeeRequestRepository));
     }
 
     public async Task<EmployeeRequestDto> Handle(RegisterEmployeeRequestQuery query, CancellationToken token)
