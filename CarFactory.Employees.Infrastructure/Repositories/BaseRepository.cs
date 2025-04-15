@@ -16,8 +16,8 @@ public interface IBaseRepository<T> where T : BaseEntity
 
 public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
+    protected readonly DbSet<T> _dbSet;
     private readonly DbContext _context;
-    private readonly DbSet<T> _dbSet;
 
     public BaseRepository(DbContext context)
     {
