@@ -2,7 +2,7 @@
 
 [Back to table of contents](_table-of-contents.md)
 
-Document contains all invariants related to [EmployeeRequestCandidate](/CarFactory.Employees.Domain/Models/EmployeeRequestCandidate.cs) Model which represents one string property.
+Document contains all invariants related to [EmployeeRequestCandidate](/CarFactory.Employees.Domain/Models/EmployeeRequestCandidate.cs) Model which represents Candidate for new Employee in request.
 
 ## FirstName, LastName Invariants
 
