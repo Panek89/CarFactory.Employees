@@ -1,4 +1,4 @@
-﻿using CarFactory.Employees.SharedLibrary.Enums;
+﻿using CarFactory.Employees.Domain.ValueObjects;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarFactory.Employees.Domain.Models;
@@ -7,10 +7,11 @@ public class Employee : BaseEntity
 {
     private DateTime _employmentStartDate;
     private DateTime? _employmentEndDate;
+    private DateTime? _dateOfBirth;
 
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public required string PersonalId { get; set; }
+    public required PersonalId PersonalId { get; set; }
     public bool IsEmployed { get; set; }
 
     public DateTime EmploymentStartDate 
@@ -54,6 +55,8 @@ public class Employee : BaseEntity
             _employmentEndDate = value;
         }
     }
+
+    public DateTime DateOfBirth {get; internal set; }
 
     [NotMapped]
     public string FullName => $"{FirstName} {LastName}";
