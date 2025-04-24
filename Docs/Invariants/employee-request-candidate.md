@@ -11,6 +11,10 @@ Document contains all invariants related to [EmployeeRequestCandidate](/CarFacto
 - Special characters and numbers are not allowed
 - FirstName and LastName cannot be the same
 
+## PersonalId Invariants
+
+- same as [PersonalId](personal-id.md)
+
 ## DateOfBirth Invariants
 
 - Must not be the default value
