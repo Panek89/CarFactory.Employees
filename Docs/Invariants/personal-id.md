@@ -7,8 +7,4 @@ Document contains all invariants related to [PersonalId](/CarFactory.Employees.D
 
 ## Invariants list
 
-- Must be exactly 11 characters long
-- Cannot be null
-- Cannot contain spaces
-- Even though it is of type string, it must contain only a sequence of digits
-- Special characters, characters not allowed
+- In Polish law it must represent a unique citizen number, i.e. the PESEL number

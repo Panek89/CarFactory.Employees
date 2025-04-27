@@ -4,26 +4,18 @@
 
 Document contains all invariants related to [EmployeeRequest](/CarFactory.Employees.Domain/Models/EmployeeRequest.cs) Model which represents request for new Employee/Employees.
 
-## NoOfEmployeesNeeded Invariants
+## NumberOfEmployeesNeeded Invariants
 
-- Cannot be null
-- Cannot have value 0 or below
-- Maximum value is 10
+- The number of employee requirements must be a minimum requirement for one employee and a maximum of ten
 
 ## Business Invariants
 
-- Cannot be null or empty
-- Must have at least 2 characters
-- Only letters and digits allowed
+- The request must include the name of the business that is submitting the request.
 
 ## StartDate Invariants
 
-- Cannot have default value
-- Cannot be in the past
-- Must be at least one month before current date
-- Cannot be later than half year from current date
+- The demand for employees can only be made in the future, at least one month in advance
 
 ## Candidates Invariants 
 
-- At Registered, RejectedByHr, NoCandidates status cannot be candidates
-- Number of Candidates cannot be greater than NoOfEmployeesNeeded
+- Number of candidates cannot exceed the number of employees required, in which case a new request must be submitted

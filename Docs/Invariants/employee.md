@@ -6,29 +6,27 @@ Document contains all invariants related to [Employee](/CarFactory.Employees.Dom
 
 ## EmploymentStartDate Invariants
 
-- Cannot be null
-- Cannot be a default Min or Max value
-- Cannot be later than EmploymentEndDate
+- Start date of employment of the employee does not have to coincide exactly with the date of the demand, we can accept the employee a little earlier or a few days after the date, maximum +- one week
 
 ## EmploymentEndDate Invariants
 
-- Can be null
-- Cannot be a default Min or Max value
-- Cannot be earlier than EmploymentStartDate
+- Employee must work at least one day, if he does not show up for work, he is not hired at all
+- An employee may be dismissed in advance or on a given day if he or she has broken the rules
 
 ## DateOfBirth Invariants
 
-- same as [EmployeeRequestCandidate](employee-request-candidate.md)
+- The legal requirement allows only adult employees to be employed (minimum 18 years old)
+- Due to the difficult conditions at our plants, employees of retirement age, i.e. over 60 years of age for women and 65 years of age for men, cannot work for us
 
 ## FirstName, LastName Invariants
 
-- same as [EmployeeRequestCandidate](employee-request-candidate.md)
+- Name and surname cannot contain any characters other than letters
+- It can't be short, the law prohibits one-letter names or surnames
 
 ## PersonalId Invariants
 
-- same as [PersonalId](personal-id.md)
+- Domain requirements are equivalent to [PersonalId](personal-id.md)
 
 ## IsEmployed
 
-- Must be true if EmploymentEndDate is null
-- Cannot be true is EmploymentEndDate has value
+- System must contain clear information whether the employee is currently employed or not, also with the possibility of checking the date in the past or in the future
