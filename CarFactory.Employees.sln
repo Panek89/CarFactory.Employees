@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFactory.Employees.Infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFactory.Employees.SharedLibrary", "CarFactory.Employees.SharedLibrary\CarFactory.Employees.SharedLibrary.csproj", "{039DC27B-F07F-4DFB-933D-4E18FFBF0D1D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFactory.Employees.Domain.TESTS", "CarFactory.Employees.Domain.TESTS\CarFactory.Employees.Domain.TESTS.csproj", "{7D5C3988-A380-428B-80D0-ABF0B4598A79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,16 @@ Global
 		{039DC27B-F07F-4DFB-933D-4E18FFBF0D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{039DC27B-F07F-4DFB-933D-4E18FFBF0D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{039DC27B-F07F-4DFB-933D-4E18FFBF0D1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5C3988-A380-428B-80D0-ABF0B4598A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5C3988-A380-428B-80D0-ABF0B4598A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5C3988-A380-428B-80D0-ABF0B4598A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5C3988-A380-428B-80D0-ABF0B4598A79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7D5C3988-A380-428B-80D0-ABF0B4598A79} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6CBF2C5-69AC-4CC7-80E7-77144081A849}
