@@ -2,7 +2,6 @@
 using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
-using System.Reflection;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
 
@@ -11,12 +10,14 @@ public class EmployeeRequestCandidateTests
     private readonly string _correctFirstName = "FirstName";
     private readonly string _correctLastName = "Surname";
     private readonly DateTime _correctDateOfBirth = DateTime.Today.AddYears(-20);
-    private readonly DateTime _aaa = DateTime.Today.AddYears(-16);
     private EmployeeRequest _employeeRequest;
+    private PersonalId _personalId;
 
     [OneTimeSetUp]
     public void Initialize()
     {
+        var fixture = new Fixture();
+        _personalId = fixture.Create<PersonalId>();
         _employeeRequest = CreateEmployeeRequest();
     }
 
@@ -25,82 +26,60 @@ public class EmployeeRequestCandidateTests
     [TestCase(default)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentNullException_WhenFirstNameIsNull(string? firstName)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
-
-        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, _employeeRequest));
+        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
     }
 
     [TestCase(null)]
     [TestCase(default)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
-
-        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, _employeeRequest));
+        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
     }
 
     [TestCase("A")]
     [TestCase("B")]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameIsTooShort(string firstName)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
-
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, _employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
     }
 
     [TestCase("C")]
     [TestCase("D")]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameIsTooShort(string lastName)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
-
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, _employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
     }
 
     [TestCase("Stefan!")]
     [TestCase("@ndrzej")]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameContainsSpecialCharacters(string firstName)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
-
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, _employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
     }
 
     [TestCase("Now@k")]
     [TestCase("Duriak!*")]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameContainsSpecialCharacters(string lastName)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
-
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, _employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
     }
 
     [TestCase(-17, Gender.Male)]
     [TestCase(-16, Gender.Female)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
         var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, personalId, _employeeRequest, gender));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, gender));
     }
 
     [TestCase(-61)]
     [TestCase(-65)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove60_ForFemales(int yearsFromToday)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
         var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, personalId, _employeeRequest, Gender.Female));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, Gender.Female));
     }
 
     [TestCase(-66)]
