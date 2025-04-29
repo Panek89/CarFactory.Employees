@@ -2,6 +2,7 @@
 using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
+using System.Reflection;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
 
@@ -10,6 +11,15 @@ public class EmployeeRequestCandidateTests
     private readonly string _correctFirstName = "FirstName";
     private readonly string _correctLastName = "Surname";
     private readonly DateTime _correctDateOfBirth = DateTime.Today.AddYears(-20);
+    private readonly DateTime _aaa = DateTime.Today.AddYears(-16);
+    private EmployeeRequest _employeeRequest;
+
+    [OneTimeSetUp]
+    public void Initialize()
+    {
+        _employeeRequest = CreateEmployeeRequest();
+    }
+
 
     [TestCase(null)]
     [TestCase(default)]
@@ -17,9 +27,8 @@ public class EmployeeRequestCandidateTests
     {
         var fixture = new Fixture();
         var personalId = fixture.Create<PersonalId>();
-        var employeeRequest = CreateEmployeeRequest();
 
-        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, employeeRequest));
+        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, _employeeRequest));
     }
 
     [TestCase(null)]
@@ -28,9 +37,8 @@ public class EmployeeRequestCandidateTests
     {
         var fixture = new Fixture();
         var personalId = fixture.Create<PersonalId>();
-        var employeeRequest = CreateEmployeeRequest();
 
-        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, employeeRequest));
+        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, _employeeRequest));
     }
 
     [TestCase("A")]
@@ -39,9 +47,8 @@ public class EmployeeRequestCandidateTests
     {
         var fixture = new Fixture();
         var personalId = fixture.Create<PersonalId>();
-        var employeeRequest = CreateEmployeeRequest();
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, _employeeRequest));
     }
 
     [TestCase("C")]
@@ -50,9 +57,8 @@ public class EmployeeRequestCandidateTests
     {
         var fixture = new Fixture();
         var personalId = fixture.Create<PersonalId>();
-        var employeeRequest = CreateEmployeeRequest();
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, _employeeRequest));
     }
 
     [TestCase("Stefan!")]
@@ -61,9 +67,8 @@ public class EmployeeRequestCandidateTests
     {
         var fixture = new Fixture();
         var personalId = fixture.Create<PersonalId>();
-        var employeeRequest = CreateEmployeeRequest();
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, personalId, _employeeRequest));
     }
 
     [TestCase("Now@k")]
@@ -72,12 +77,44 @@ public class EmployeeRequestCandidateTests
     {
         var fixture = new Fixture();
         var personalId = fixture.Create<PersonalId>();
-        var employeeRequest = CreateEmployeeRequest();
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, employeeRequest));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, personalId, _employeeRequest));
     }
 
-    private void CreateEmployeeRequestCandidate(string firstName, string lastName, DateTime dateOfBirth, PersonalId personalId, EmployeeRequest employeeRequest)
+    [TestCase(-17, Gender.Male)]
+    [TestCase(-16, Gender.Female)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
+    {
+        var fixture = new Fixture();
+        var personalId = fixture.Create<PersonalId>();
+        var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
+
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, personalId, _employeeRequest, gender));
+    }
+
+    [TestCase(-61)]
+    [TestCase(-65)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove60_ForFemales(int yearsFromToday)
+    {
+        var fixture = new Fixture();
+        var personalId = fixture.Create<PersonalId>();
+        var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
+
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, personalId, _employeeRequest, Gender.Female));
+    }
+
+    [TestCase(-66)]
+    [TestCase(-70)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove65_ForMales(int yearsFromToday)
+    {
+        var fixture = new Fixture();
+        var personalId = fixture.Create<PersonalId>();
+        var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
+
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, personalId, _employeeRequest, Gender.Male));
+    }
+
+    private void CreateEmployeeRequestCandidate(string firstName, string lastName, DateTime dateOfBirth, PersonalId personalId, EmployeeRequest employeeRequest, Gender gender = Gender.Male)
     {
         var requestCandidate = new EmployeeRequestCandidate()
         {
@@ -86,6 +123,7 @@ public class EmployeeRequestCandidateTests
             LastName = lastName,
             PersonalId = personalId,
             DateOfBirth = dateOfBirth,
+            Gender = gender,
             Status = EmployeeCandidateStatus.Candidate,
             EmployeeRequest = employeeRequest,
             IsDeleted = false,
