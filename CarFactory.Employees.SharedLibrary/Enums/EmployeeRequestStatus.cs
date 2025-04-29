@@ -4,9 +4,9 @@ public enum EmployeeRequestStatus
 {
     Registered = 0,
     Approved = 1,
-    Rejected = 2,
-    RejectedByCandidate = 3,
-    Interview = 4,
-    WaitForExams = 5,
-    Hired = 6
+    RejectedByHr = 2,
+    NoCandidates = 3,
+    CandidatesInInterview = 4,
+    CandidatesInExams = 5,
+    Completed = 6
 }
