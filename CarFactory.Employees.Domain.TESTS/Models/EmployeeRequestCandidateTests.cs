@@ -121,13 +121,13 @@ public class EmployeeRequestCandidateTests
         return new EmployeeRequest()
         {
             Id = Guid.NewGuid(),
+            NumberOfEmployeesNeeded = 5,
             Business = "Business",
+            StartDate = DateTime.Today.AddMonths(2),
+            Status = EmployeeRequestStatus.Registered,
             Candidates = [],
             CreatedBy = "TEST",
             CreatedAt = DateTime.Today,
-            NumberOfEmployeesNeeded = 5,
-            StartDate = DateTime.Today.AddMonths(2),
-            Status = EmployeeRequestStatus.Registered,
             IsDeleted = false
         };
     }
