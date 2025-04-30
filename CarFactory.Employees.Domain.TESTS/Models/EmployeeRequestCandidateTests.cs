@@ -86,11 +86,16 @@ public class EmployeeRequestCandidateTests
     [TestCase(-70)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove65_ForMales(int yearsFromToday)
     {
-        var fixture = new Fixture();
-        var personalId = fixture.Create<PersonalId>();
         var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, personalId, _employeeRequest, Gender.Male));
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, Gender.Male));
+    }
+
+    [TestCase(null)]
+    [TestCase(default)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeRequestIsNull(EmployeeRequest? employeeRequest)
+    {
+        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, _correctDateOfBirth, _personalId, employeeRequest, Gender.Male));
     }
 
     private void CreateEmployeeRequestCandidate(string firstName, string lastName, DateTime dateOfBirth, PersonalId personalId, EmployeeRequest employeeRequest, Gender gender = Gender.Male)
