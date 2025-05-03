@@ -56,7 +56,7 @@ public class Employee : BaseEntity
         }
     }
 
-    public DateTime DateOfBirth {get; internal set; }
+    public DateTime DateOfBirth {get; set; }
 
     [NotMapped]
     public string FullName => $"{FirstName} {LastName}";
