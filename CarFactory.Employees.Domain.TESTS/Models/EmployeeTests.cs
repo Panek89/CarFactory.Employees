@@ -64,11 +64,27 @@ public class EmployeeTests
 
     [TestCase(-17, Gender.Male)]
     [TestCase(-16, Gender.Female)]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
+    public void Employee_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
     {
         var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
         Assert.Throws<ArgumentException>(() => CreateEmployee(_correctFirstName, _correctLastName, _personalId, true, _correctEmploymentStartDate, null, dateOfBirth, gender));
+    }
+
+    public void Employee_ShouldThrowArgumentException_WhenWork_LessThanTwoDays()
+    {
+        var employmentStartDate = DateTime.Today;
+        var employmentEndDate = DateTime.Today.AddDays(1);
+
+        Assert.Throws<ArgumentException>(() => CreateEmployee(_correctFirstName, _correctLastName, _personalId, true, employmentStartDate, employmentEndDate, _correctDateOfBirth, _maleGender));
+    }
+
+    public void Employee_ShouldThrowArgumentException_WhenEmployeed_HasEmploymentEndDate()
+    {
+        var employmentEndDate = DateTime.Today;
+        var isEmployed = true;
+
+        Assert.Throws<ArgumentException>(() => CreateEmployee(_correctFirstName, _correctLastName, _personalId, isEmployed, _correctEmploymentStartDate, employmentEndDate, _correctDateOfBirth, _maleGender));
     }
 
     private PersonalId CreatePersonalId(string personalId)
