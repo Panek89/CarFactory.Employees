@@ -1,5 +1,6 @@
 ﻿using CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
 using CarFactory.Employees.Domain.Models;
+using CarFactory.Employees.Domain.ValueObjects;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 
@@ -10,7 +11,7 @@ public static class EmployeeRequestContractMapping
         return new EmployeeRequest()
         {
             Id = Guid.NewGuid(),
-            NoOfEmployeesNeeded = command.NoOfEmployeesNeeded,
+            NumberOfEmployeesNeeded = command.NoOfEmployeesNeeded,
             Business = command.Business,
             StartDate = command.StartDate,
             Status = command.Status,
@@ -25,7 +26,7 @@ public static class EmployeeRequestContractMapping
         return new EmployeeRequestDto()
         {
             Id = employeeRequest.Id,
-            NoOfEmployeesNeeded = employeeRequest.NoOfEmployeesNeeded,
+            NoOfEmployeesNeeded = employeeRequest.NumberOfEmployeesNeeded,
             Business = employeeRequest.Business,
             StartDate = employeeRequest.StartDate,
             Status = employeeRequest.Status
@@ -44,8 +45,8 @@ public static class EmployeeRequestContractMapping
             Id = Guid.NewGuid(),
             FirstName = command.FirstName,
             LastName = command.LastName,
-            PersonalId = command.PersonalId,
-            Age = command.Age,
+            PersonalId = new PersonalId(command.PersonalId),
+            DateOfBirth = command.DateOfBirth,
             Status = command.Status,
             IsDeleted = false,
             CreatedAt = DateTime.UtcNow,
@@ -61,7 +62,7 @@ public static class EmployeeRequestContractMapping
             FirstName = employeeRequestCandidate.FirstName,
             LastName = employeeRequestCandidate.LastName,
             PersonalId= employeeRequestCandidate.PersonalId,
-            Age= employeeRequestCandidate.Age,
+            DateOfBirth = employeeRequestCandidate.DateOfBirth,
             Status = employeeRequestCandidate.Status,
         };
     }
