@@ -1,4 +1,5 @@
 ﻿using CarFactory.Employees.Domain.ValueObjects;
+using CarFactory.Employees.SharedLibrary.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarFactory.Employees.Domain.Models;
@@ -56,7 +57,8 @@ public class Employee : BaseEntity
         }
     }
 
-    public DateTime DateOfBirth {get; internal set; }
+    public DateTime DateOfBirth {get; set; }
+    public Gender Gender { get; set; }
 
     [NotMapped]
     public string FullName => $"{FirstName} {LastName}";

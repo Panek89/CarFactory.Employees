@@ -9,6 +9,7 @@ public class EmployeeRequestCandidate : BaseEntity
     public required string LastName { get; set; }
     public required PersonalId PersonalId { get; set; }
     public required DateTime DateOfBirth { get; set; }
+    public required Gender Gender { get; set; }
     public EmployeeCandidateStatus Status { get; set; }
 
     public Guid EmployeeRequestId { get; set; }
