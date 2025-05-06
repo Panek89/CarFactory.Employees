@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.Infrastructure.Repositories;
+﻿using CarFactory.Employees.Domain.Repositories;
+using CarFactory.Employees.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

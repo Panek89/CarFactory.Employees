@@ -1,12 +1,8 @@
 ﻿using CarFactory.Employees.Domain.Models;
+using CarFactory.Employees.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarFactory.Employees.Infrastructure.Repositories;
-
-public interface IEmployeeRequestRepository : IBaseRepository<EmployeeRequest>
-{
-    Task<IEnumerable<EmployeeRequest>> GetAllWithCandidatesAsync(CancellationToken token);
-}
 
 public class EmployeeRequestRepository : BaseRepository<EmployeeRequest>, IEmployeeRequestRepository
 {
@@ -19,5 +15,3 @@ public class EmployeeRequestRepository : BaseRepository<EmployeeRequest>, IEmplo
         return await _dbSet.Include(x => x.Candidates).ToListAsync(token);
     }
 }
-
-

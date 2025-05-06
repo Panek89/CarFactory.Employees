@@ -1,5 +1,5 @@
 ﻿using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
-using CarFactory.Employees.Infrastructure.Repositories;
+using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.SharedLibrary.Enums;
 using MediatR;
 
@@ -38,6 +38,6 @@ public class AssignCandidateToRequestCommand : IRequest<EmployeeRequestCandidate
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
     public required string PersonalId { get; init; }
-    public required int Age { get; init; }
+    public required DateTime DateOfBirth { get; init; }
     public readonly EmployeeCandidateStatus Status = EmployeeCandidateStatus.Candidate;
 }

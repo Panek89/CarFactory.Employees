@@ -1,5 +1,5 @@
 using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
-using CarFactory.Employees.Infrastructure.Repositories;
+using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.SharedLibrary.Enums;
 using MediatR;
 
