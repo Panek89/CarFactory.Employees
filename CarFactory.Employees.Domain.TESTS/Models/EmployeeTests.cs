@@ -71,6 +71,7 @@ public class EmployeeTests
         Assert.Throws<ArgumentException>(() => CreateEmployee(_correctFirstName, _correctLastName, _personalId, true, _correctEmploymentStartDate, null, dateOfBirth, gender));
     }
 
+    [Test]
     public void Employee_ShouldThrowArgumentException_WhenWork_LessThanTwoDays()
     {
         var employmentStartDate = DateTime.Today;
@@ -79,6 +80,7 @@ public class EmployeeTests
         Assert.Throws<ArgumentException>(() => CreateEmployee(_correctFirstName, _correctLastName, _personalId, true, employmentStartDate, employmentEndDate, _correctDateOfBirth, _maleGender));
     }
 
+    [Test]
     public void Employee_ShouldThrowArgumentException_WhenEmployeed_HasEmploymentEndDate()
     {
         var employmentEndDate = DateTime.Today;
