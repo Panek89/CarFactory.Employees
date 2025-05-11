@@ -1,4 +1,5 @@
 ﻿using CarFactory.Employees.Domain.TESTS.Extensions;
+using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
 
@@ -45,6 +46,17 @@ public class EmployeeRequestTests
                Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("StartDate"));
     }
 
+    [TestCase(EmployeeRequestStatus.Approved)]
+    [TestCase(EmployeeRequestStatus.RejectedByHr)]
+    [TestCase(EmployeeRequestStatus.NoCandidates)]
+    [TestCase(EmployeeRequestStatus.CandidatesInInterview)]
+    [TestCase(EmployeeRequestStatus.CandidatesInExams)]
+    [TestCase(EmployeeRequestStatus.Completed)]
+    public void EmployeeRequest_ShouldThrowArgumentException_WhenStatusOnRegister_IsIncorrect(EmployeeRequestStatus status)
+    {
+        Assert.That(() => EmployeeRequestExtensions.CorrectRegister().SetStatus(status),
+                Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("Status"));
+    }
 
     // TODO
     //[TestCase(1, 2)]
