@@ -52,6 +52,11 @@ public class EmployeeRequest : BaseEntity
 
     public EmployeeRequest SetStatus(EmployeeRequestStatus status)
     {
+        if (status != EmployeeRequestStatus.Registered)
+        {
+            throw new ArgumentException($"On request registration, status can be only set to {EmployeeRequestStatus.Registered.ToString()}", nameof(Status));
+        }
+
         Status = status;
         return this;
     }
