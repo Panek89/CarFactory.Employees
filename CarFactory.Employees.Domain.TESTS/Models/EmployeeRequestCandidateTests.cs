@@ -19,22 +19,24 @@ public class EmployeeRequestCandidateTests
     public void EmployeeRequestCandidate_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
     {
         Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetLastName(lastName),
-            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("LastName")); ;
+            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("LastName"));
     }
 
-    //[TestCase("A")]
-    //[TestCase("B")]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameIsTooShort(string firstName)
-    //{
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    //}
+    [TestCase("A")]
+    [TestCase("B")]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameIsTooShort(string firstName)
+    {
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetFirstName(firstName),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("FirstName"));
+    }
 
-    //[TestCase("C")]
-    //[TestCase("D")]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameIsTooShort(string lastName)
-    //{
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    //}
+    [TestCase("C")]
+    [TestCase("D")]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameIsTooShort(string lastName)
+    {
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetLastName(lastName),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("LastName"));
+    }
 
     //[TestCase("Stefan!")]
     //[TestCase("@ndrzej")]

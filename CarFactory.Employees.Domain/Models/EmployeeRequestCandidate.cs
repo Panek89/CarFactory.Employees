@@ -23,6 +23,11 @@ public class EmployeeRequestCandidate : BaseEntity
             throw new ArgumentNullException(nameof(FirstName), "Candidate first name must have value");
         }
 
+        if (firstName.Length < 2)
+        {
+            throw new ArgumentException("Candidate first name must have at least two letters", nameof(FirstName));
+        }
+
         FirstName = firstName;
         return this;
     }
@@ -32,6 +37,11 @@ public class EmployeeRequestCandidate : BaseEntity
         if (lastName == default)
         {
             throw new ArgumentNullException(nameof(LastName), "Candidate last name must have value");
+        }
+
+        if (lastName.Length < 2)
+        {
+            throw new ArgumentException("Candidate first name must have at least two letters", nameof(LastName));
         }
 
         LastName = lastName;
