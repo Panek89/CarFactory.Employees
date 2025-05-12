@@ -10,7 +10,7 @@ public class EmployeeRequestTests
     [TestCase(-1)]
     public void EmployeeRequest_ShouldThrowArgumentException_WhenNumberOfEmployeesNeeded_IsBelowOne(int numberOfEmployeesNeeded)
     {
-        Assert.That(() => DomainTestsExtensions.CorrectRegister().SetNumberOfEmployeesNeeded(numberOfEmployeesNeeded),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetNumberOfEmployeesNeeded(numberOfEmployeesNeeded),
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("NumberOfEmployeesNeeded"));
     }
 
@@ -19,7 +19,7 @@ public class EmployeeRequestTests
     [TestCase(21)]
     public void EmployeeRequest_ShouldThrowArgumentException_WhenNumberOfEmployeesNeeded_IsAboveTen(int numberOfEmployeesNeeded)
     {
-        Assert.That(() => DomainTestsExtensions.CorrectRegister().SetNumberOfEmployeesNeeded(numberOfEmployeesNeeded),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetNumberOfEmployeesNeeded(numberOfEmployeesNeeded),
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("NumberOfEmployeesNeeded"));
     }
 
@@ -28,21 +28,21 @@ public class EmployeeRequestTests
     [TestCase("")]
     public void EmployeeRequest_ShouldThrowArgumentNullException_WhenBusiness_IsNull(string? business)
     {
-        Assert.That(() => DomainTestsExtensions.CorrectRegister().SetBusiness(business),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetBusiness(business),
             Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("Business"));
     }
 
     [Test]
     public void EmployeeRequest_ShouldThrowArgumentException_WhenStartDate_IsInThePast()
     {
-        Assert.That(() => DomainTestsExtensions.CorrectRegister().SetStartDate(DateTime.Today.AddDays(-1)),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetStartDate(DateTime.Today.AddDays(-1)),
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("StartDate"));
     }
 
     [Test]
     public void EmployeeRequest_ShouldThrowArgumentException_WhenStartDate_IsLessThanOneMonthInFuture()
     {
-        Assert.That(() => DomainTestsExtensions.CorrectRegister().SetStartDate(DateTime.Today.AddMonths(1).AddDays(-1)),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetStartDate(DateTime.Today.AddMonths(1).AddDays(-1)),
                Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("StartDate"));
     }
 
@@ -54,7 +54,7 @@ public class EmployeeRequestTests
     [TestCase(EmployeeRequestStatus.Completed)]
     public void EmployeeRequest_ShouldThrowArgumentException_WhenStatusOnRegister_IsIncorrect(EmployeeRequestStatus status)
     {
-        Assert.That(() => DomainTestsExtensions.CorrectRegister().SetStatus(status),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetStatus(status),
                 Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("Status"));
     }
 

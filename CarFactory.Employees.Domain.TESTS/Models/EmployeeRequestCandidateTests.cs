@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using CarFactory.Employees.Domain.Models;
+using CarFactory.Employees.Domain.TESTS.Extensions;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
 
@@ -18,7 +19,7 @@ public class EmployeeRequestCandidateTests
     {
         var fixture = new Fixture();
         _personalId = fixture.Create<PersonalId>();
-        _employeeRequest = CreateEmployeeRequest();
+        _employeeRequest = DomainTestsExtensions.EmployeeRequestRegisterCorrect();
     }
 
 
@@ -113,22 +114,6 @@ public class EmployeeRequestCandidateTests
             IsDeleted = false,
             CreatedBy = "TEST",
             CreatedAt = DateTime.Today
-        };
-    }
-
-    private EmployeeRequest CreateEmployeeRequest()
-    {
-        return new EmployeeRequest()
-        {
-            Id = Guid.NewGuid(),
-            NumberOfEmployeesNeeded = 5,
-            Business = "Business",
-            StartDate = DateTime.Today.AddMonths(2),
-            Status = EmployeeRequestStatus.Registered,
-            Candidates = [],
-            CreatedBy = "TEST",
-            CreatedAt = DateTime.Today,
-            IsDeleted = false
         };
     }
 }

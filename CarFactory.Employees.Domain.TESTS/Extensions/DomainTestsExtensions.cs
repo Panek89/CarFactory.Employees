@@ -8,7 +8,7 @@ public static class DomainTestsExtensions
     private static readonly string _correctBusiness = "Business";
     private static readonly DateTime _correctStartDate = DateTime.UtcNow.AddMonths(2);
 
-    public static EmployeeRequest CorrectRegister()
+    public static EmployeeRequest EmployeeRequestRegisterCorrect()
     {
         return EmployeeRequest.Register(_correctNumberOfEmployeesNeeded, _correctBusiness, _correctStartDate);
     }
