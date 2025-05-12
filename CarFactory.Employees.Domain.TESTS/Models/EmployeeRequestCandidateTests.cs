@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.Domain.TESTS.Extensions
+﻿using CarFactory.Employees.Domain.Models;
+using CarFactory.Employees.Domain.TESTS.Extensions;
 using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
@@ -83,10 +84,11 @@ public class EmployeeRequestCandidateTests
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("DateOfBirth"));
     }
 
-    //[TestCase(null)]
-    //[TestCase(default)]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeRequestIsNull(EmployeeRequest? employeeRequest)
-    //{
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, _correctDateOfBirth, _personalId, employeeRequest, Gender.Male));
-    //}
+    [TestCase(null)]
+    [TestCase(default)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeRequestIsNull(EmployeeRequest? employeeRequest)
+    {
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetEmployeeRequest(employeeRequest),
+            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("EmployeeRequest"));
+    }
 }

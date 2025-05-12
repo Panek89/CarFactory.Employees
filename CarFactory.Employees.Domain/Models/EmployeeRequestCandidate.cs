@@ -99,6 +99,11 @@ public class EmployeeRequestCandidate : BaseEntity
 
     public EmployeeRequestCandidate SetEmployeeRequest(EmployeeRequest employeeRequest)
     {
+        if (employeeRequest is null)
+        {
+            throw new ArgumentNullException(nameof(EmployeeRequest), "Request must have a value");
+        }
+
         EmployeeRequestId = employeeRequest.Id;
         EmployeeRequest = employeeRequest;
         return this;
