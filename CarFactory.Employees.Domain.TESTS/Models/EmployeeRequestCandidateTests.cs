@@ -1,6 +1,5 @@
-﻿using CarFactory.Employees.Domain.Models;
-using CarFactory.Employees.Domain.TESTS.Extensions;
-using CarFactory.Employees.Domain.ValueObjects;
+﻿using CarFactory.Employees.Domain.TESTS.Extensions
+using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
 
@@ -54,32 +53,35 @@ public class EmployeeRequestCandidateTests
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("LastName"));
     }
 
-    //[TestCase(-17, Gender.Male)]
-    //[TestCase(-16, Gender.Female)]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
-    //{
-    //    var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
+    [TestCase(-17, Gender.Male)]
+    [TestCase(-16, Gender.Female)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
+    {
+        var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, gender));
-    //}
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetDateOfBirth(dateOfBirth).SetGender(gender),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("DateOfBirth"));
+    }
 
-    //[TestCase(-61)]
-    //[TestCase(-65)]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove60_ForFemales(int yearsFromToday)
-    //{
-    //    var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
+    [TestCase(-61)]
+    [TestCase(-65)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove60_ForFemales(int yearsFromToday)
+    {
+        var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, Gender.Female));
-    //}
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetGender(Gender.Female).SetDateOfBirth(dateOfBirth),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("DateOfBirth"));
+    }
 
-    //[TestCase(-66)]
-    //[TestCase(-70)]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove65_ForMales(int yearsFromToday)
-    //{
-    //    var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
+    [TestCase(-66)]
+    [TestCase(-70)]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsAbove65_ForMales(int yearsFromToday)
+    {
+        var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, Gender.Male));
-    //}
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetGender(Gender.Male).SetDateOfBirth(dateOfBirth),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("DateOfBirth"));
+    }
 
     //[TestCase(null)]
     //[TestCase(default)]
