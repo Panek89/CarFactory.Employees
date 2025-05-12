@@ -8,4 +8,9 @@ public static class StringExtensions
     {
         return Regex.IsMatch(input, @"\D");
     }
+
+    public static bool HasNonLettersChars(this string input)
+    {
+        return !Regex.IsMatch(input, @"^\p{L}+$");
+    }
 }
