@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.SharedLibrary.Enums;
+﻿using CarFactory.Employees.Domain.ExtensionMethods;
+using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.Models;
 
@@ -69,15 +70,5 @@ public class EmployeeRequest : BaseEntity
             .SetBusiness(business)
             .SetStartDate(startDate)
             .SetStatus(EmployeeRequestStatus.Registered);
-    }
-
-    private EmployeeRequest SetInitialMetaData()
-    {
-        Id = Guid.NewGuid();
-        IsDeleted = false;
-        CreatedAt = DateTime.UtcNow;
-        CreatedBy = "System";
-
-        return this;
     }
 }
