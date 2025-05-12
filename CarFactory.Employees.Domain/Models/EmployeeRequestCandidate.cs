@@ -18,12 +18,22 @@ public class EmployeeRequestCandidate : BaseEntity
 
     public EmployeeRequestCandidate SetFirstName(string firstName)
     {
+        if (firstName == default)
+        {
+            throw new ArgumentNullException(nameof(FirstName), "Candidate first name must have value");
+        }
+
         FirstName = firstName;
         return this;
     }
 
     public EmployeeRequestCandidate SetLastName(string lastName)
     {
+        if (lastName == default)
+        {
+            throw new ArgumentNullException(nameof(LastName), "Candidate last name must have value");
+        }
+
         LastName = lastName;
         return this;
     }
