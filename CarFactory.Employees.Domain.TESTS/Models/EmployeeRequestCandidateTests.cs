@@ -91,4 +91,13 @@ public class EmployeeRequestCandidateTests
         Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetEmployeeRequest(employeeRequest),
             Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("EmployeeRequest"));
     }
+
+    [TestCase(EmployeeCandidateStatus.Accepted)]
+    [TestCase(EmployeeCandidateStatus.Rejected)]
+    [TestCase(EmployeeCandidateStatus.Withdrawn)]
+    public void EmployeeRequest_ShouldThrowArgumentException_WhenStatusOnRegister_IsIncorrect(EmployeeCandidateStatus status)
+    {
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetStatus(status),
+                Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("Status"));
+    }
 }

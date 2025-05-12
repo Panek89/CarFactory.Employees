@@ -90,10 +90,21 @@ public class EmployeeRequestCandidate : BaseEntity
 
         if (Gender == Gender.Female && dateOfBirth < DateTime.Today.AddYears(-60))
         {
-            throw new ArgumentException("Maxim age for female candidates is 60 years", nameof(DateOfBirth));
+            throw new ArgumentException("Maximum age for female candidates is 60 years", nameof(DateOfBirth));
         }
 
         DateOfBirth = dateOfBirth;
+        return this;
+    }
+
+    public EmployeeRequestCandidate SetStatus(EmployeeCandidateStatus status)
+    {
+        if (status != EmployeeCandidateStatus.Candidate)
+        {
+            throw new ArgumentException($"New candidate cannot have another status that candidate {EmployeeCandidateStatus.Candidate}", nameof(Status));
+        }
+
+        Status = status;
         return this;
     }
 
@@ -118,6 +129,7 @@ public class EmployeeRequestCandidate : BaseEntity
             .SetPersonalId(personalId)
             .SetGender(gender)
             .SetDateOfBirth(dateOfBirth)
+            .SetStatus(EmployeeCandidateStatus.Candidate)
             .SetEmployeeRequest(employeeRequest);
     }
 }
