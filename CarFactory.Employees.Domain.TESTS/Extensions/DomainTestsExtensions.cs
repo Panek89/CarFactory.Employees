@@ -23,6 +23,6 @@ public static class DomainTestsExtensions
 
     public static EmployeeRequestCandidate EmployeeRequestCandidateRegisterCorrect()
     {
-        return EmployeeRequestCandidate.RegisterCandidate(_correctFirstName, _correctLastName, _correctPersonalId, _correctDateOfBirth, _maleGender, EmployeeRequestRegisterCorrect());
+        return EmployeeRequestCandidate.RegisterCandidate(_correctFirstName, _correctLastName, _correctPersonalId, _maleGender, _correctDateOfBirth, EmployeeRequestRegisterCorrect());
     }
 }

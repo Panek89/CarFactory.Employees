@@ -65,15 +65,35 @@ public class EmployeeRequestCandidate : BaseEntity
         return this;
     }
 
-    public EmployeeRequestCandidate SetDateOfBirth(DateTime dateOfBirth)
-    {
-        DateOfBirth = dateOfBirth;
-        return this;
-    }
-
     public EmployeeRequestCandidate SetGender(Gender gender)
     {
         Gender = gender;
+        return this;
+    }
+
+    public EmployeeRequestCandidate SetDateOfBirth(DateTime dateOfBirth)
+    {
+        if (Gender == Gender.Male && dateOfBirth > DateTime.Today.AddYears(-18))
+        {
+            throw new ArgumentException("Minimum age for male candidates is 18 years", nameof(DateOfBirth));
+        }
+
+        if (Gender == Gender.Male && dateOfBirth < DateTime.Today.AddYears(-65))
+        {
+            throw new ArgumentException("Maximum age for male candidates is 65 years", nameof(DateOfBirth));
+        }
+
+        if (Gender == Gender.Female && dateOfBirth > DateTime.Today.AddYears(-18))
+        {
+            throw new ArgumentException("Minimum age for female candidates is 18 years", nameof(DateOfBirth));
+        }
+
+        if (Gender == Gender.Female && dateOfBirth < DateTime.Today.AddYears(-60))
+        {
+            throw new ArgumentException("Maxim age for female candidates is 60 years", nameof(DateOfBirth));
+        }
+
+        DateOfBirth = dateOfBirth;
         return this;
     }
 
@@ -84,15 +104,15 @@ public class EmployeeRequestCandidate : BaseEntity
         return this;
     }
 
-    public static EmployeeRequestCandidate RegisterCandidate(string firstName, string lastName, PersonalId personalId, DateTime dateOfBirth, Gender gender, EmployeeRequest employeeRequest)
+    public static EmployeeRequestCandidate RegisterCandidate(string firstName, string lastName, PersonalId personalId, Gender gender, DateTime dateOfBirth, EmployeeRequest employeeRequest)
     {
         return new EmployeeRequestCandidate()
             .SetInitialMetaData()
             .SetFirstName(firstName)
             .SetLastName(lastName)
             .SetPersonalId(personalId)
-            .SetDateOfBirth(dateOfBirth)
             .SetGender(gender)
+            .SetDateOfBirth(dateOfBirth)
             .SetEmployeeRequest(employeeRequest);
     }
 }
