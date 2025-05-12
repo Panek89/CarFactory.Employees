@@ -1,6 +1,7 @@
 ﻿using CarFactory.Employees.Domain.ExtensionMethods;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
+using CarFactory.Employees.SharedLibrary.Extensions;
 
 namespace CarFactory.Employees.Domain.Models;
 
@@ -28,6 +29,11 @@ public class EmployeeRequestCandidate : BaseEntity
             throw new ArgumentException("Candidate first name must have at least two letters", nameof(FirstName));
         }
 
+        if (firstName.HasNonLettersChars())
+        {
+            throw new ArgumentException("Candidate first name can only contains letters", nameof(FirstName));
+        }
+
         FirstName = firstName;
         return this;
     }
@@ -42,6 +48,11 @@ public class EmployeeRequestCandidate : BaseEntity
         if (lastName.Length < 2)
         {
             throw new ArgumentException("Candidate first name must have at least two letters", nameof(LastName));
+        }
+
+        if (lastName.HasNonLettersChars())
+        {
+            throw new ArgumentException("Candidate first name can only contains letters", nameof(LastName));
         }
 
         LastName = lastName;

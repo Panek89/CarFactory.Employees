@@ -38,19 +38,21 @@ public class EmployeeRequestCandidateTests
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("LastName"));
     }
 
-    //[TestCase("Stefan!")]
-    //[TestCase("@ndrzej")]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameContainsSpecialCharacters(string firstName)
-    //{
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    //}
+    [TestCase("Stefan!")]
+    [TestCase("@ndrzej")]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameContainsSpecialCharacters(string firstName)
+    {
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetFirstName(firstName),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("FirstName"));
+    }
 
-    //[TestCase("Now@k")]
-    //[TestCase("Duriak!*")]
-    //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameContainsSpecialCharacters(string lastName)
-    //{
-    //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    //}
+    [TestCase("Now@k")]
+    [TestCase("Duriak!*")]
+    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameContainsSpecialCharacters(string lastName)
+    {
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetLastName(lastName),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("LastName"));
+    }
 
     //[TestCase(-17, Gender.Male)]
     //[TestCase(-16, Gender.Female)]
@@ -84,23 +86,5 @@ public class EmployeeRequestCandidateTests
     //public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeRequestIsNull(EmployeeRequest? employeeRequest)
     //{
     //    Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, _correctDateOfBirth, _personalId, employeeRequest, Gender.Male));
-    //}
-
-    //private void CreateEmployeeRequestCandidate(string firstName, string lastName, DateTime dateOfBirth, PersonalId personalId, EmployeeRequest employeeRequest, Gender gender = Gender.Male)
-    //{
-    //    var requestCandidate = new EmployeeRequestCandidate()
-    //    {
-    //        Id = Guid.NewGuid(),
-    //        FirstName = firstName,
-    //        LastName = lastName,
-    //        PersonalId = personalId,
-    //        DateOfBirth = dateOfBirth,
-    //        Gender = gender,
-    //        Status = EmployeeCandidateStatus.Candidate,
-    //        EmployeeRequest = employeeRequest,
-    //        IsDeleted = false,
-    //        CreatedBy = "TEST",
-    //        CreatedAt = DateTime.Today
-    //    };
     //}
 }
