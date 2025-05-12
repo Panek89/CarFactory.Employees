@@ -2,7 +2,7 @@
 
 namespace CarFactory.Employees.Domain.TESTS.Extensions;
 
-public static class EmployeeRequestExtensions
+public static class DomainTestsExtensions
 {
     private static readonly int _correctNumberOfEmployeesNeeded = 5;
     private static readonly string _correctBusiness = "Business";
