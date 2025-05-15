@@ -100,4 +100,13 @@ public class EmployeeRequestCandidateTests
         Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetStatus(status),
                 Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("Status"));
     }
+
+    [TestCase(Gender.Female)]
+    [TestCase(Gender.Male)]
+    public void EmployeeRequest_ShouldThrowArgumentException_WhenGender_IsNotDefinedBeforeDateOfBirth(Gender gender)
+    {
+        var dateOfBirth = DateTime.Today.AddYears(-30);
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetDateOfBirth(dateOfBirth).SetGender(gender),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("DateOfBirth"));
+    }
 }
