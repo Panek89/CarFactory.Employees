@@ -24,14 +24,14 @@ public class EmployeeTests
     [TestCase(default)]
     public void Employee_ShouldThrowArgumentNullException_WhenFirstNameIsNull(string? firstName)
     {
-        Assert.Throws<ArgumentNullException>(() => CreateEmployee(firstName, _correctLastName, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
+        Assert.Throws<ArgumentNullException>(() => CreateEmployee(firstName!, _correctLastName, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
     }
 
     [TestCase(null)]
     [TestCase(default)]
     public void Employee_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
     {
-        Assert.Throws<ArgumentNullException>(() => CreateEmployee(_correctFirstName, lastName, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
+        Assert.Throws<ArgumentNullException>(() => CreateEmployee(_correctFirstName, lastName!, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
     }
 
     [TestCase("A")]

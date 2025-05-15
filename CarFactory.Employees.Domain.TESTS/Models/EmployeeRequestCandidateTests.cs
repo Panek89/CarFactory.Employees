@@ -10,7 +10,7 @@ public class EmployeeRequestCandidateTests
     [TestCase(default)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentNullException_WhenFirstNameIsNull(string? firstName)
     {
-        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetFirstName(firstName),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetFirstName(firstName!),
             Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("FirstName"));
     }
 
@@ -18,7 +18,7 @@ public class EmployeeRequestCandidateTests
     [TestCase(default)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
     {
-        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetLastName(lastName),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetLastName(lastName!),
             Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("LastName"));
     }
 
@@ -88,7 +88,7 @@ public class EmployeeRequestCandidateTests
     [TestCase(default)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeRequestIsNull(EmployeeRequest? employeeRequest)
     {
-        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetEmployeeRequest(employeeRequest),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetEmployeeRequest(employeeRequest!),
             Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("EmployeeRequest"));
     }
 

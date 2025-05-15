@@ -28,7 +28,7 @@ public class EmployeeRequestTests
     [TestCase("")]
     public void EmployeeRequest_ShouldThrowArgumentNullException_WhenBusiness_IsNull(string? business)
     {
-        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetBusiness(business),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestRegisterCorrect().SetBusiness(business!),
             Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("Business"));
     }
 

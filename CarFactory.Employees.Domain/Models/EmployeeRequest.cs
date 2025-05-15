@@ -6,7 +6,7 @@ namespace CarFactory.Employees.Domain.Models;
 public class EmployeeRequest : BaseEntity
 {
     public int NumberOfEmployeesNeeded { get; private set; }
-    public string Business { get; private set; }
+    public string Business { get; private set; } = null!;
     public DateTime StartDate { get; private set; }
     public EmployeeRequestStatus Status { get; private set; }
     public ICollection<EmployeeRequestCandidate> Candidates { get; set; } = [];

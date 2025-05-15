@@ -7,15 +7,17 @@ namespace CarFactory.Employees.Domain.Models;
 
 public class EmployeeRequestCandidate : BaseEntity
 {
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public PersonalId PersonalId { get; private set; }
+    public string FirstName { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
+    public PersonalId PersonalId { get; private set; } = null!;
     public DateTime DateOfBirth { get; private set; }
     public Gender Gender { get; private set; }
     public EmployeeCandidateStatus Status { get; private set; }
 
     public Guid EmployeeRequestId { get; private set; }
-    public EmployeeRequest EmployeeRequest { get; private set; }
+    public EmployeeRequest EmployeeRequest { get; private set; } = null!;
+
+    private EmployeeRequestCandidate() { }
 
     public EmployeeRequestCandidate SetFirstName(string firstName)
     {

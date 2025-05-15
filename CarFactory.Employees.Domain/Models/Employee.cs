@@ -8,7 +8,7 @@ public class Employee : BaseEntity
 {
     private DateTime _employmentStartDate;
     private DateTime? _employmentEndDate;
-    private DateTime? _dateOfBirth;
+    //private DateTime? _dateOfBirth;
 
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
