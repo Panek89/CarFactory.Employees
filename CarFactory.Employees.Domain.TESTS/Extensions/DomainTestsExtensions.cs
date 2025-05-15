@@ -25,4 +25,9 @@ public static class DomainTestsExtensions
     {
         return EmployeeRequestCandidate.RegisterCandidate(_correctFirstName, _correctLastName, _correctPersonalId, _maleGender, _correctDateOfBirth, EmployeeRequestRegisterCorrect());
     }
+
+    public static EmployeeRequestCandidate ResetGender(this EmployeeRequestCandidate requestCandidate)
+    {
+        return requestCandidate.SetGender(Gender.NotSpecified);
+    }
 }

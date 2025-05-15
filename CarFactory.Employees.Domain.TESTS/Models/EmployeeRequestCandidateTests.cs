@@ -106,7 +106,7 @@ public class EmployeeRequestCandidateTests
     public void EmployeeRequest_ShouldThrowArgumentException_WhenGender_IsNotDefinedBeforeDateOfBirth(Gender gender)
     {
         var dateOfBirth = DateTime.Today.AddYears(-30);
-        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().SetGender(Gender.NotSpecified).SetDateOfBirth(dateOfBirth),
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().ResetGender().SetDateOfBirth(dateOfBirth),
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("DateOfBirth"));
     }
 }
