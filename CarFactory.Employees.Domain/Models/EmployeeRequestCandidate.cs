@@ -67,17 +67,17 @@ public class EmployeeRequestCandidate : BaseEntity
 
     public EmployeeRequestCandidate SetGender(Gender gender)
     {
+        if (gender is Gender.NotSpecified)
+        {
+            throw new ArgumentException("Gender must be specified", nameof(Gender));
+        }
+
         Gender = gender;
         return this;
     }
 
     public EmployeeRequestCandidate SetDateOfBirth(DateTime dateOfBirth)
     {
-        if (Gender is Gender.NotSpecified)
-        {
-            throw new ArgumentException("Gender must be specified before Date of birth", nameof(DateOfBirth));
-        }
-
         if (Gender == Gender.Male && dateOfBirth > DateTime.Today.AddYears(-18))
         {
             throw new ArgumentException("Minimum age for male candidates is 18 years", nameof(DateOfBirth));

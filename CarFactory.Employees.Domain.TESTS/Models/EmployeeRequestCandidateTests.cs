@@ -101,12 +101,11 @@ public class EmployeeRequestCandidateTests
                 Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("Status"));
     }
 
-    [TestCase(Gender.Female)]
-    [TestCase(Gender.Male)]
-    public void EmployeeRequest_ShouldThrowArgumentException_WhenGender_IsNotDefinedBeforeDateOfBirth(Gender gender)
+    [Test]
+    public void EmployeeRequest_ShouldThrowArgumentException_WhenGender_IsNotSpecified()
     {
         var dateOfBirth = DateTime.Today.AddYears(-30);
-        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().ResetGender().SetDateOfBirth(dateOfBirth),
-            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("DateOfBirth"));
+        Assert.That(() => DomainTestsExtensions.EmployeeRequestCandidateRegisterCorrect().ResetGender(),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("Gender"));
     }
 }
