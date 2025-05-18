@@ -23,6 +23,16 @@ public class Employee : BaseEntity
 
     private Employee() {}
 
+    public Employee SetFirstName(string firstName)
+    {
+        if (firstName == default)
+        {
+            throw new ArgumentNullException(nameof(FirstName), "Employee Firstname must be filled");
+        }
+
+        return this;
+    }
+
     public static Employee Hire()
     {
         return new Employee().SetInitialMetaData();
