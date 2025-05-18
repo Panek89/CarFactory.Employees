@@ -30,6 +30,13 @@ public class Employee : BaseEntity
             throw new ArgumentNullException(nameof(FirstName), "Employee Firstname must be filled");
         }
 
+        FirstName = firstName;
+        return this;
+    }
+
+    public Employee SetLastName(string lastName)
+    {
+        LastName = lastName;
         return this;
     }
 

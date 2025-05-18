@@ -13,12 +13,13 @@ public class EmployeeTests
             Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo(nameof(Employee.FirstName)));
     }
 
-    // [TestCase(null)]
-    // [TestCase(default)]
-    // public void Employee_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
-    // {
-    //     Assert.Throws<ArgumentNullException>(() => CreateEmployee(_correctFirstName, lastName!, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
-    // }
+    [TestCase(null)]
+    [TestCase(default)]
+    public void Employee_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
+    {
+        Assert.That(() => EmployeeTestsExtensions.CorrectHire().SetFirstName(lastName!),
+            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo(nameof(Employee.LastName)));
+    }
 
     // [TestCase("A")]
     // [TestCase("B")]
