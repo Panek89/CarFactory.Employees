@@ -1,53 +1,11 @@
 ﻿using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.TESTS.Extensions;
+using CarFactory.Employees.Domain.ValueObjects;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
 
 public class EmployeeTests
 {
-    [TestCase(null)]
-    [TestCase(default)]
-    public void Employee_ShouldThrowArgumentNullException_WhenFirstNameIsNull(string? firstName)
-    {
-        Assert.That(() => EmployeeTestsExtensions.CorrectHire().SetFirstName(firstName!),
-            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo(nameof(Employee.FirstName)));
-    }
-
-    [TestCase(null)]
-    [TestCase(default)]
-    public void Employee_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
-    {
-        Assert.That(() => EmployeeTestsExtensions.CorrectHire().SetFirstName(lastName!),
-            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo(nameof(Employee.LastName)));
-    }
-
-    // [TestCase("A")]
-    // [TestCase("B")]
-    // public void Employee_ShouldThrowArgumentException_WhenFirstNameIsTooShort(string firstName)
-    // {
-    //     Assert.Throws<ArgumentException>(() => CreateEmployee(firstName, _correctLastName, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
-    // }
-
-    // [TestCase("C")]
-    // [TestCase("D")]
-    // public void Employee_ShouldThrowArgumentException_WhenLastNameIsTooShort(string lastName)
-    // {
-    //     Assert.Throws<ArgumentException>(() => CreateEmployee(_correctFirstName, lastName, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
-    // }
-
-    // [TestCase("Stefan!")]
-    // [TestCase("@ndrzej")]
-    // public void Employee_ShouldThrowArgumentException_WhenFirstNameContainsSpecialCharacters(string firstName)
-    // {
-    //     Assert.Throws<ArgumentException>(() => CreateEmployee(firstName, _correctLastName, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
-    // }
-
-    // [TestCase("Now@k")]
-    // [TestCase("Duriak!*")]
-    // public void Employee_ShouldThrowArgumentException_WhenLastNameContainsSpecialCharacters(string lastName)
-    // {
-    //     Assert.Throws<ArgumentException>(() => CreateEmployee(_correctFirstName, lastName, _personalId, true, _correctEmploymentStartDate, null, _correctDateOfBirth, _maleGender));
-    // }
 
     // [TestCase(-17, Gender.Male)]
     // [TestCase(-16, Gender.Female)]
