@@ -43,6 +43,11 @@ public class Employee : BaseEntity
 
     public Employee SetGender(Gender gender)
     {
+        if (gender is Gender.NotSpecified)
+        {
+            throw new ArgumentException("Gender must be specified", nameof(Gender));
+        }
+
         Gender = gender;
         return this;
     }
