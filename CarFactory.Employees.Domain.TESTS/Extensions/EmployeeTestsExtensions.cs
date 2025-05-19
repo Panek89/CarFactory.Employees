@@ -1,4 +1,3 @@
-using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
 
@@ -13,8 +12,4 @@ public static class EmployeeTestsExtensions
     private static readonly Gender _maleGender = Gender.Male;
     private static readonly DateTime _correctEmploymentStartDate = DateTime.Today.AddDays(1);
 
-    public static Employee CorrectHire()
-    {
-        return Employee.Hire();
-    }
 }

@@ -1,5 +1,4 @@
-﻿using CarFactory.Employees.Domain.ExtensionMethods;
-using CarFactory.Employees.Domain.ValueObjects;
+﻿using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,27 +20,27 @@ public class Employee : BaseEntity
     [NotMapped]
     public string FullNameReverse => $"{LastName} {FirstName}";
 
-    private Employee() {}
+    internal Employee() {}
 
-    public Employee SetFirstName(FirstName firstName)
+    internal Employee SetFirstName(FirstName firstName)
     {
         FirstName = firstName;
         return this;
     }
 
-    public Employee SetLastName(LastName lastName)
+    internal Employee SetLastName(LastName lastName)
     {
         LastName = lastName;
         return this;
     }
 
-    public Employee SetPersonalId(PersonalId personalId)
+    internal Employee SetPersonalId(PersonalId personalId)
     {
         PersonalId = personalId;
         return this;
     }
 
-    public Employee SetGender(Gender gender)
+    internal Employee SetGender(Gender gender)
     {
         if (gender is Gender.NotSpecified)
         {
@@ -52,26 +51,21 @@ public class Employee : BaseEntity
         return this;
     }
 
-    public Employee SetIsEmployed(bool isEmployed)
+    internal Employee SetIsEmployed(bool isEmployed)
     {
         IsEmployed = isEmployed;
         return this;
     }
 
-    public Employee SetEmploymentStartDate(DateTime employmentStartDate)
+    internal Employee SetEmploymentStartDate(DateTime employmentStartDate)
     {
         EmploymentStartDate = employmentStartDate;
         return this;
     }
 
-    public Employee SetEmploymentEndDate(DateTime employmentEndDate)
+    internal Employee SetEmploymentEndDate(DateTime employmentEndDate)
     {
         EmploymentEndDate = employmentEndDate;
         return this;
-    }
-
-    public static Employee Hire()
-    {
-        return new Employee().SetInitialMetaData();
     }
 }

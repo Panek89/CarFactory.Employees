@@ -1,4 +1,4 @@
-﻿using CarFactory.Employees.Domain.Models;
+﻿using CarFactory.Employees.Domain.Factories;
 using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
@@ -8,10 +8,10 @@ public class EmployeeTests
     [Test]
     public void Employee_ShouldThrowArgumentException_WhenGender_IsNotSpecified()
     {
-        var dateOfBirth = DateTime.Today.AddYears(-30);
-        Assert.That(() => Employee.Hire().SetGender(Gender.NotSpecified),
+        Assert.That(() => EmployeeFactory.Create().SetGender(Gender.NotSpecified),
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo("Gender"));
     }
+
     // [TestCase(-17, Gender.Male)]
     // [TestCase(-16, Gender.Female)]
     // public void Employee_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
