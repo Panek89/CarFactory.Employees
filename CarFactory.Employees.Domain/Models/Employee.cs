@@ -35,6 +35,36 @@ public class Employee : BaseEntity
         return this;
     }
 
+    public Employee SetPersonalId(PersonalId personalId)
+    {
+        PersonalId = personalId;
+        return this;
+    }
+
+    public Employee SetGender(Gender gender)
+    {
+        Gender = gender;
+        return this;
+    }
+
+    public Employee SetIsEmployed(bool isEmployed)
+    {
+        IsEmployed = isEmployed;
+        return this;
+    }
+
+    public Employee SetEmploymentStartDate(DateTime employmentStartDate)
+    {
+        EmploymentStartDate = employmentStartDate;
+        return this;
+    }
+
+    public Employee SetEmploymentEndDate(DateTime employmentEndDate)
+    {
+        EmploymentEndDate = employmentEndDate;
+        return this;
+    }
+
     public static Employee Hire()
     {
         return new Employee().SetInitialMetaData();
