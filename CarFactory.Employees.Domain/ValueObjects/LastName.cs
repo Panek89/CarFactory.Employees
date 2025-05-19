@@ -27,5 +27,5 @@ public class LastName
     }
 
     public static implicit operator string(LastName lastName) => lastName.Value;
-    public static explicit operator LastName(string value) => new LastName(value);
+    public static implicit operator LastName(string value) => new LastName(value);
 }

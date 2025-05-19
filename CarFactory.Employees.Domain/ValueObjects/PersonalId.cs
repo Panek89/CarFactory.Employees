@@ -27,5 +27,5 @@ public class PersonalId
     }
 
     public static implicit operator string(PersonalId personalId) => personalId.Value;
-    public static explicit operator PersonalId(string value) => new PersonalId(value);
+    public static implicit operator PersonalId(string value) => new PersonalId(value);
 }
