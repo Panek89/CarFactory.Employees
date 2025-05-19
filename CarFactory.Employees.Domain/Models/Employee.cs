@@ -7,8 +7,8 @@ namespace CarFactory.Employees.Domain.Models;
 
 public class Employee : BaseEntity
 {
-    public string FirstName { get; private set; } = null!;
-    public string LastName { get; private set; } = null!;
+    public FirstName FirstName { get; private set; } = null!;
+    public LastName LastName { get; private set; } = null!;
     public PersonalId PersonalId { get; private set; } = null!;
     public DateTime DateOfBirth { get; private set; }
     public Gender Gender { get; private set; }
@@ -23,18 +23,13 @@ public class Employee : BaseEntity
 
     private Employee() {}
 
-    public Employee SetFirstName(string firstName)
+    public Employee SetFirstName(FirstName firstName)
     {
-        if (firstName == default)
-        {
-            throw new ArgumentNullException(nameof(FirstName), "Employee Firstname must be filled");
-        }
-
         FirstName = firstName;
         return this;
     }
 
-    public Employee SetLastName(string lastName)
+    public Employee SetLastName(LastName lastName)
     {
         LastName = lastName;
         return this;
