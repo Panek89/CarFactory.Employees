@@ -6,9 +6,9 @@ public class FirstNameTests
 {
     [TestCase(null)]
     [TestCase(default)]
-    public void FIrstName_ShouldThrowArgumentNullException_WhenValueIsNull(string? value)
+    public void FirstName_ShouldThrowArgumentNullException_WhenValueIsNull(string? firstName)
     {
-        Assert.Throws<ArgumentNullException>(() => new FirstName(value!));
+        Assert.Throws<ArgumentNullException>(() => new FirstName(firstName!));
     }
 
     [TestCase("A")]

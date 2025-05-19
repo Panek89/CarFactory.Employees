@@ -1,4 +1,4 @@
-using System;
+using CarFactory.Employees.SharedLibrary.Extensions;
 
 namespace CarFactory.Employees.Domain.ValueObjects;
 
@@ -8,6 +8,21 @@ public class LastName
 
     public LastName(string value)
     {
+        if (value == default)
+        {
+            throw new ArgumentNullException(nameof(value), "First name cannot be null");
+        }
+
+        if (value.Length < 2)
+        {
+            throw new ArgumentException("First name must have at least two letters", nameof(value));
+        }
+
+        if (value.HasNonLettersChars())
+        {
+            throw new ArgumentException("First name can only contains letters", nameof(value));
+        }
+
         Value = value;
     }
 
