@@ -6,11 +6,40 @@ namespace CarFactory.Employees.Domain.Models;
 
 public class Employee : BaseEntity
 {
+    private DateTime _dateOfBirth;
+
     public FirstName FirstName { get; private set; } = null!;
     public LastName LastName { get; private set; } = null!;
     public PersonalId PersonalId { get; private set; } = null!;
-    public DateTime DateOfBirth { get; private set; }
     public Gender Gender { get; private set; }
+    public DateTime DateOfBirth
+    {
+        get => _dateOfBirth;
+        private set
+        {
+            if (Gender == Gender.Male && value > DateTime.Today.AddYears(-18))
+            {
+                throw new ArgumentException("Minimum age for male candidates is 18 years", nameof(DateOfBirth));
+            }
+
+            if (Gender == Gender.Male && value < DateTime.Today.AddYears(-65))
+            {
+                throw new ArgumentException("Maximum age for male candidates is 65 years", nameof(DateOfBirth));
+            }
+
+            if (Gender == Gender.Female && value > DateTime.Today.AddYears(-18))
+            {
+                throw new ArgumentException("Minimum age for female candidates is 18 years", nameof(DateOfBirth));
+            }
+
+            if (Gender == Gender.Female && value < DateTime.Today.AddYears(-60))
+            {
+                throw new ArgumentException("Maximum age for female candidates is 60 years", nameof(DateOfBirth));
+            }
+
+            _dateOfBirth = value;
+        }
+    }
     public bool IsEmployed { get; private set; }
     public DateTime EmploymentStartDate { get; private set; }
     public DateTime? EmploymentEndDate { get; private set; }
@@ -20,52 +49,48 @@ public class Employee : BaseEntity
     [NotMapped]
     public string FullNameReverse => $"{LastName} {FirstName}";
 
-    internal Employee() {}
+    private Employee() { }
 
-    internal Employee SetFirstName(FirstName firstName)
+    private Employee(
+        FirstName firstName,
+        LastName lastName,
+        PersonalId personalId,
+        Gender gender,
+        DateTime dateOfBirth,
+        bool isEmployed,
+        DateTime employmentStartDate,
+        DateTime? employmentEndDate
+        )
     {
         FirstName = firstName;
-        return this;
-    }
-
-    internal Employee SetLastName(LastName lastName)
-    {
         LastName = lastName;
-        return this;
-    }
-
-    internal Employee SetPersonalId(PersonalId personalId)
-    {
         PersonalId = personalId;
-        return this;
-    }
-
-    internal Employee SetGender(Gender gender)
-    {
-        if (gender is Gender.NotSpecified)
-        {
-            throw new ArgumentException("Gender must be specified", nameof(Gender));
-        }
-
         Gender = gender;
-        return this;
-    }
-
-    internal Employee SetIsEmployed(bool isEmployed)
-    {
+        DateOfBirth = dateOfBirth;
         IsEmployed = isEmployed;
-        return this;
-    }
-
-    internal Employee SetEmploymentStartDate(DateTime employmentStartDate)
-    {
         EmploymentStartDate = employmentStartDate;
-        return this;
+        EmploymentEndDate = employmentEndDate;
     }
 
-    internal Employee SetEmploymentEndDate(DateTime employmentEndDate)
+    public static Employee HireMale(
+        FirstName firstName,
+        LastName lastName,
+        PersonalId personalId,
+        DateTime dateOfBirth,
+        DateTime employmentStartDate
+        )
     {
-        EmploymentEndDate = employmentEndDate;
-        return this;
+        return new Employee(firstName, lastName, personalId, Gender.Male, dateOfBirth, true, employmentStartDate, null);
+    }
+
+    public static Employee HireFemale(
+        FirstName firstName,
+        LastName lastName,
+        PersonalId personalId,
+        DateTime dateOfBirth,
+        DateTime employmentStartDate
+        )
+    {
+        return new Employee(firstName, lastName, personalId, Gender.Female, dateOfBirth, true, employmentStartDate, null);
     }
 }
