@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.Domain.ValueObjects;
+﻿using CarFactory.Employees.Domain.ExtensionMethods;
+using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -51,7 +52,8 @@ public class Employee : BaseEntity
 
     private Employee() { }
 
-    private Employee(
+    private Employee
+    (
         FirstName firstName,
         LastName lastName,
         PersonalId personalId,
@@ -60,7 +62,7 @@ public class Employee : BaseEntity
         bool isEmployed,
         DateTime employmentStartDate,
         DateTime? employmentEndDate
-        )
+    )
     {
         FirstName = firstName;
         LastName = lastName;
@@ -72,25 +74,47 @@ public class Employee : BaseEntity
         EmploymentEndDate = employmentEndDate;
     }
 
-    public static Employee HireMale(
+    public static Employee HireMale
+    (
         FirstName firstName,
         LastName lastName,
         PersonalId personalId,
         DateTime dateOfBirth,
         DateTime employmentStartDate
-        )
+    )
     {
-        return new Employee(firstName, lastName, personalId, Gender.Male, dateOfBirth, true, employmentStartDate, null);
+        return new Employee
+        (
+            firstName,
+            lastName,
+            personalId,
+            Gender.Male,
+            dateOfBirth,
+            true,
+            employmentStartDate,
+            null
+        ).SetInitialMetaData();
     }
 
-    public static Employee HireFemale(
+    public static Employee HireFemale
+    (
         FirstName firstName,
         LastName lastName,
         PersonalId personalId,
         DateTime dateOfBirth,
         DateTime employmentStartDate
-        )
+    )
     {
-        return new Employee(firstName, lastName, personalId, Gender.Female, dateOfBirth, true, employmentStartDate, null);
+        return new Employee
+        (
+            firstName,
+            lastName,
+            personalId,
+            Gender.Female,
+            dateOfBirth,
+            true,
+            employmentStartDate,
+            null
+        ).SetInitialMetaData();
     }
 }
