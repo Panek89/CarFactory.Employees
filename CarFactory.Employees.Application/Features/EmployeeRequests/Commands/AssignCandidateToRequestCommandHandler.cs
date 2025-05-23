@@ -1,4 +1,5 @@
 ﻿using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
+using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.SharedLibrary.Enums;
 using MediatR;
@@ -24,7 +25,16 @@ public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCand
             return null;
         }
 
-        var employeeRequestCandidate = command.MapToCandidate(employeeRequest);
+        var employeeRequestCandidate = EmployeeRequestCandidate.Register
+        (
+            command.FirstName,
+            command.LastName,
+            command.PersonalId,
+            command.Gender,
+            command.DateOfBirth,
+            employeeRequest
+        );
+
         await _candidateRepository.AddAsync(employeeRequestCandidate, cancellationToken);
         await _candidateRepository.SaveChangesAsync(cancellationToken);
 
@@ -38,6 +48,6 @@ public class AssignCandidateToRequestCommand : IRequest<EmployeeRequestCandidate
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
     public required string PersonalId { get; init; }
+    public required Gender Gender { get; init; }
     public required DateTime DateOfBirth { get; init; }
-    public readonly EmployeeCandidateStatus Status = EmployeeCandidateStatus.Candidate;
 }

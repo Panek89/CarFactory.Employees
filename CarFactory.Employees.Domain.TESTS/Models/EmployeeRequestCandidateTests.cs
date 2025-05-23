@@ -1,76 +1,19 @@
-﻿using AutoFixture;
-using CarFactory.Employees.Domain.Models;
-using CarFactory.Employees.Domain.ValueObjects;
+﻿using CarFactory.Employees.Domain.Models;
+using CarFactory.Employees.Domain.TESTS.Factories;
 using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.TESTS.Models;
 
 public class EmployeeRequestCandidateTests
 {
-    private readonly string _correctFirstName = "FirstName";
-    private readonly string _correctLastName = "Surname";
-    private readonly DateTime _correctDateOfBirth = DateTime.Today.AddYears(-20);
-    private EmployeeRequest _employeeRequest;
-    private PersonalId _personalId;
-
-    [OneTimeSetUp]
-    public void Initialize()
-    {
-        var fixture = new Fixture();
-        _personalId = fixture.Create<PersonalId>();
-        _employeeRequest = CreateEmployeeRequest();
-    }
-
-
-    [TestCase(null)]
-    [TestCase(default)]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentNullException_WhenFirstNameIsNull(string? firstName)
-    {
-        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    }
-
-    [TestCase(null)]
-    [TestCase(default)]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentNullException_WhenLastNameIsNull(string? lastName)
-    {
-        Assert.Throws<ArgumentNullException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    }
-
-    [TestCase("A")]
-    [TestCase("B")]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameIsTooShort(string firstName)
-    {
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    }
-
-    [TestCase("C")]
-    [TestCase("D")]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameIsTooShort(string lastName)
-    {
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    }
-
-    [TestCase("Stefan!")]
-    [TestCase("@ndrzej")]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenFirstNameContainsSpecialCharacters(string firstName)
-    {
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(firstName, _correctLastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    }
-
-    [TestCase("Now@k")]
-    [TestCase("Duriak!*")]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenLastNameContainsSpecialCharacters(string lastName)
-    {
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, lastName, _correctDateOfBirth, _personalId, _employeeRequest));
-    }
-
     [TestCase(-17, Gender.Male)]
     [TestCase(-16, Gender.Female)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeAgeIsBelow18_NoMatterOfGender(int yearsFromToday, Gender gender)
     {
         var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, gender));
+        Assert.That(() => EmployeeRequestCandidateFactory.Register(gender: gender, dateOfBirth: dateOfBirth),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo(nameof(EmployeeRequestCandidate.DateOfBirth)));
     }
 
     [TestCase(-61)]
@@ -79,7 +22,8 @@ public class EmployeeRequestCandidateTests
     {
         var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, Gender.Female));
+        Assert.That(() => EmployeeRequestCandidateFactory.Register(gender: Gender.Female, dateOfBirth: dateOfBirth),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo(nameof(EmployeeRequestCandidate.DateOfBirth)));
     }
 
     [TestCase(-66)]
@@ -88,47 +32,23 @@ public class EmployeeRequestCandidateTests
     {
         var dateOfBirth = DateTime.Today.AddYears(yearsFromToday);
 
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, dateOfBirth, _personalId, _employeeRequest, Gender.Male));
+        Assert.That(() => EmployeeRequestCandidateFactory.Register(gender: Gender.Male, dateOfBirth: dateOfBirth),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo(nameof(EmployeeRequestCandidate.DateOfBirth)));
     }
 
     [TestCase(null)]
     [TestCase(default)]
     public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeRequestIsNull(EmployeeRequest? employeeRequest)
     {
-        Assert.Throws<ArgumentException>(() => CreateEmployeeRequestCandidate(_correctFirstName, _correctLastName, _correctDateOfBirth, _personalId, employeeRequest, Gender.Male));
+        Assert.That(() => EmployeeRequestCandidateFactory.RegisterWithoutEmployeeRequest(employeeRequest: employeeRequest),
+            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo(nameof(EmployeeRequestCandidate.EmployeeRequest)));
     }
 
-    private void CreateEmployeeRequestCandidate(string firstName, string lastName, DateTime dateOfBirth, PersonalId personalId, EmployeeRequest employeeRequest, Gender gender = Gender.Male)
+    [Test]
+    public void EmployeeRequest_ShouldThrowArgumentException_WhenGender_IsNotSpecified()
     {
-        var requestCandidate = new EmployeeRequestCandidate()
-        {
-            Id = Guid.NewGuid(),
-            FirstName = firstName,
-            LastName = lastName,
-            PersonalId = personalId,
-            DateOfBirth = dateOfBirth,
-            Gender = gender,
-            Status = EmployeeCandidateStatus.Candidate,
-            EmployeeRequest = employeeRequest,
-            IsDeleted = false,
-            CreatedBy = "TEST",
-            CreatedAt = DateTime.Today
-        };
-    }
-
-    private EmployeeRequest CreateEmployeeRequest()
-    {
-        return new EmployeeRequest()
-        {
-            Id = Guid.NewGuid(),
-            NumberOfEmployeesNeeded = 5,
-            Business = "Business",
-            StartDate = DateTime.Today.AddMonths(2),
-            Status = EmployeeRequestStatus.Registered,
-            Candidates = [],
-            CreatedBy = "TEST",
-            CreatedAt = DateTime.Today,
-            IsDeleted = false
-        };
+        var dateOfBirth = DateTime.Today.AddYears(-30);
+        Assert.That(() => EmployeeRequestCandidateFactory.Register(gender: Gender.NotSpecified),
+            Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo(nameof(EmployeeRequestCandidate.Gender)));
     }
 }

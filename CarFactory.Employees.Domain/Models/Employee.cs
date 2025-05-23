@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.Domain.ValueObjects;
+﻿using CarFactory.Employees.Domain.ExtensionMethods;
+using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,62 +7,114 @@ namespace CarFactory.Employees.Domain.Models;
 
 public class Employee : BaseEntity
 {
-    private DateTime _employmentStartDate;
-    private DateTime? _employmentEndDate;
-    private DateTime? _dateOfBirth;
+    private DateTime _dateOfBirth;
 
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-    public required PersonalId PersonalId { get; set; }
-    public bool IsEmployed { get; set; }
-
-    public DateTime EmploymentStartDate 
-    { 
-        get { return _employmentStartDate; }  
-        set
-        {
-            if (_employmentStartDate == DateTime.MinValue)
-            {
-                throw new ArgumentException("Employment start date can't be Minimum Value", nameof(_employmentStartDate));
-            }
-
-            if (_employmentStartDate == DateTime.MaxValue)
-            {
-                throw new ArgumentException("Employment start date can't be Maximum Value", nameof(_employmentStartDate));
-            }
-
-            if (_employmentEndDate.HasValue && _employmentStartDate < _employmentEndDate)
-            {
-                throw new ArgumentException("Employment start date can't be earlier than _employmentEndData", nameof(_employmentStartDate));
-            }
-            _employmentStartDate = value;
-        }
-    }
-
-    public DateTime? EmploymentEndDate
+    public FirstName FirstName { get; private set; } = null!;
+    public LastName LastName { get; private set; } = null!;
+    public PersonalId PersonalId { get; private set; } = null!;
+    public Gender Gender { get; private set; }
+    public DateTime DateOfBirth
     {
-        get { return _employmentEndDate; }
-        set
+        get => _dateOfBirth;
+        private set
         {
-            if (_employmentStartDate == DateTime.MinValue)
+            if (Gender == Gender.Male && value > DateTime.Today.AddYears(-18))
             {
-                throw new ArgumentException("Employment end date can't be Minimum Value", nameof(_employmentEndDate));
+                throw new ArgumentException("Minimum age for male candidates is 18 years", nameof(DateOfBirth));
             }
 
-            if (_employmentStartDate == DateTime.MaxValue)
+            if (Gender == Gender.Male && value < DateTime.Today.AddYears(-65))
             {
-                throw new ArgumentException("Employment end date can't be Maximum Value", nameof(_employmentEndDate));
+                throw new ArgumentException("Maximum age for male candidates is 65 years", nameof(DateOfBirth));
             }
 
-            _employmentEndDate = value;
+            if (Gender == Gender.Female && value > DateTime.Today.AddYears(-18))
+            {
+                throw new ArgumentException("Minimum age for female candidates is 18 years", nameof(DateOfBirth));
+            }
+
+            if (Gender == Gender.Female && value < DateTime.Today.AddYears(-60))
+            {
+                throw new ArgumentException("Maximum age for female candidates is 60 years", nameof(DateOfBirth));
+            }
+
+            _dateOfBirth = value;
         }
     }
-
-    public DateTime DateOfBirth {get; set; }
-    public Gender Gender { get; set; }
+    public bool IsEmployed { get; private set; }
+    public DateTime EmploymentStartDate { get; private set; }
+    public DateTime? EmploymentEndDate { get; private set; }
 
     [NotMapped]
     public string FullName => $"{FirstName} {LastName}";
     [NotMapped]
     public string FullNameReverse => $"{LastName} {FirstName}";
+
+    private Employee() { }
+
+    private Employee
+    (
+        FirstName firstName,
+        LastName lastName,
+        PersonalId personalId,
+        Gender gender,
+        DateTime dateOfBirth,
+        bool isEmployed,
+        DateTime employmentStartDate,
+        DateTime? employmentEndDate
+    )
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        PersonalId = personalId;
+        Gender = gender;
+        DateOfBirth = dateOfBirth;
+        IsEmployed = isEmployed;
+        EmploymentStartDate = employmentStartDate;
+        EmploymentEndDate = employmentEndDate;
+    }
+
+    public static Employee HireMale
+    (
+        FirstName firstName,
+        LastName lastName,
+        PersonalId personalId,
+        DateTime dateOfBirth,
+        DateTime employmentStartDate
+    )
+    {
+        return new Employee
+        (
+            firstName,
+            lastName,
+            personalId,
+            Gender.Male,
+            dateOfBirth,
+            true,
+            employmentStartDate,
+            null
+        ).SetInitialMetaData();
+    }
+
+    public static Employee HireFemale
+    (
+        FirstName firstName,
+        LastName lastName,
+        PersonalId personalId,
+        DateTime dateOfBirth,
+        DateTime employmentStartDate
+    )
+    {
+        return new Employee
+        (
+            firstName,
+            lastName,
+            personalId,
+            Gender.Female,
+            dateOfBirth,
+            true,
+            employmentStartDate,
+            null
+        ).SetInitialMetaData();
+    }
 }

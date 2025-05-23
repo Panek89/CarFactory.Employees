@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarFactory.Employees.Domain\CarFactory.Employees.Domain.csproj" />
+    <ProjectReference Include="..\CarFactory.Employees.SharedLibrary\CarFactory.Employees.SharedLibrary.csproj" />
   </ItemGroup>
 
 </Project>
