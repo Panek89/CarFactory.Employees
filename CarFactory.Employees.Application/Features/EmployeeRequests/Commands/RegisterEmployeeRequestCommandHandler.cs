@@ -1,6 +1,6 @@
 using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
+using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.Repositories;
-using CarFactory.Employees.SharedLibrary.Enums;
 using MediatR;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
@@ -16,7 +16,7 @@ public class RegisterEmployeeRequestCommandHandler : IRequestHandler<RegisterEmp
 
     public async Task<EmployeeRequestDto> Handle(RegisterEmployeeRequestCommand command, CancellationToken token)
     {
-        var employeeRequest = command.MapToEmployeeRequest();
+        var employeeRequest = EmployeeRequest.Register(command.NoOfEmployeesNeeded, command.Business, command.StartDate);
         await _employeeRequestRepository.AddAsync(employeeRequest, token);
         await _employeeRequestRepository.SaveChangesAsync(token);
 
@@ -29,5 +29,4 @@ public class RegisterEmployeeRequestCommand : IRequest<EmployeeRequestDto>
     public int NoOfEmployeesNeeded { get; init; }
     public required string Business { get; init; }
     public DateTime StartDate { get; init; }
-    public readonly EmployeeRequestStatus Status = EmployeeRequestStatus.Registered;
 }

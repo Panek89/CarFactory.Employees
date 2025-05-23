@@ -10,7 +10,6 @@ public class EmployeeRequestCandidateFactory
     private static readonly LastName _correctLastName = "LastName";
     private static readonly PersonalId _correctPersonalId = new("12345678901");
     private static readonly DateTime _correctDateOfBirth = DateTime.Today.AddYears(-20);
-    private static readonly Gender _maleGender = Gender.Male;
 
     public static EmployeeRequestCandidate Register
     (
