@@ -8,6 +8,13 @@ public class EmployeeRequestCandidateConfiguration : IEntityTypeConfiguration<Em
 {
     public void Configure(EntityTypeBuilder<EmployeeRequestCandidate> builder)
     {
-        builder.ToTable("EmployeeRequestCandidates");
+        builder.ToTable("EMPLOYEE_REQUEST_CANIDATES");
+
+        builder.HasKey(x => x.Id);
+
+        builder.FirstNameConfiguration();
+        builder.LastNameConfiguration();
+        builder.PersonalIdConfiguration();
+        builder.BaseEntityConfiguration();
     }
 }
