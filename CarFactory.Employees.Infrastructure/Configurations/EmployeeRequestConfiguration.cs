@@ -10,7 +10,7 @@ public class EmployeeRequestConfiguration : IEntityTypeConfiguration<EmployeeReq
     {
         builder.ToTable("EMPLOYEE_REQUESTS");
 
-        builder.HasKey(e => e.Id);
+        builder.HasKey(k => k.Id);
 
         builder.HasMany(e => e.Candidates)
             .WithOne(c => c.EmployeeRequest)
