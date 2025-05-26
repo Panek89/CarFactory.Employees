@@ -1,14 +1,15 @@
-﻿using CarFactory.Employees.Domain.Models;
+
+using CarFactory.Employees.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CarFactory.Employees.Infrastructure.Configurations;
 
-public class EmployeeRequestCandidateConfiguration : IEntityTypeConfiguration<EmployeeRequestCandidate>
+public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {
-    public void Configure(EntityTypeBuilder<EmployeeRequestCandidate> builder)
+    public void Configure(EntityTypeBuilder<Employee> builder)
     {
-        builder.ToTable("EMPLOYEE_REQUEST_CANIDATES");
+        builder.ToTable("EMPLOYEES");
 
         builder.HasKey(k => k.Id);
 

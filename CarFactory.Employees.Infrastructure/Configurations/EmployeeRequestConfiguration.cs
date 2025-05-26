@@ -8,12 +8,19 @@ public class EmployeeRequestConfiguration : IEntityTypeConfiguration<EmployeeReq
 {
     public void Configure(EntityTypeBuilder<EmployeeRequest> builder)
     {
-        builder.ToTable("EmployeeRequests");
+        builder.ToTable("EMPLOYEE_REQUESTS");
 
-        builder.HasKey(e => e.Id);
+        builder.HasKey(k => k.Id);
+
         builder.HasMany(e => e.Candidates)
             .WithOne(c => c.EmployeeRequest)
             .HasForeignKey(c => c.EmployeeRequestId)
             .IsRequired();
+
+        builder.Property(p => p.Business)
+            .HasMaxLength(50)
+            .HasColumnName(nameof(EmployeeRequest.Business));
+
+        builder.BaseEntityConfiguration();
     }
 }
