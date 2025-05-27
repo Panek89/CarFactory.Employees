@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: carfactory-employees-api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:${API_PORT}
       - ConnectionStrings__SQLSERVER=Server=mssql,${DB_PORT};Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};Trust Server Certificate=true;
     ports:
