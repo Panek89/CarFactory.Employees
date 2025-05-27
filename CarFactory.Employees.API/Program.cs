@@ -1,5 +1,7 @@
+using CarFactory.Employees.API.Extensions;
 using CarFactory.Employees.Application;
 using CarFactory.Employees.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,15 +20,19 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.RegisterDevelopment();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.RegisterNonDevelopment();
+}
+
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.RunMigrations();
 
 app.Run();
