@@ -13,5 +13,5 @@ public class GetEmployeeDetailsQueryHandler : IRequestHandler<GetEmployeeDetails
 
 public class GetEmployeeDetailsQuery : IRequest<EmployeeDetails>
 {
-
+    public Guid Id { get; init; }
 }
