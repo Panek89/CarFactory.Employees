@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CarFactory.Employees.Application.Features.Employees.Queries;
 
-public class GetEmployeeDetailsQueryHandler : IRequestHandler<GetEmployeeDetailsQuery, EmployeeDetails>
+public class GetEmployeeDetailsQueryHandler : IRequestHandler<GetEmployeeDetailsQuery, EmployeeDetails?>
 {
     private readonly IEmployeeRepository _employeeRepository;
 
@@ -13,13 +13,13 @@ public class GetEmployeeDetailsQueryHandler : IRequestHandler<GetEmployeeDetails
         _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
     }
 
-    public Task<EmployeeDetails> Handle(GetEmployeeDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<EmployeeDetails?> Handle(GetEmployeeDetailsQuery query, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _employeeRepository.GetEmployeeDetailsAsync(query.Id, cancellationToken);
     }
 }
 
-public class GetEmployeeDetailsQuery : IRequest<EmployeeDetails>
+public class GetEmployeeDetailsQuery : IRequest<EmployeeDetails?>
 {
     public Guid Id { get; init; }
 }

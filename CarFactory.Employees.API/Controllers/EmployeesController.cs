@@ -17,9 +17,16 @@ namespace CarFactory.Employees.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<EmployeeDetails> EmployeeDetails(Guid id)
+        public async Task<ActionResult<EmployeeDetails>> EmployeeDetails(Guid id, CancellationToken token)
         {
-            return await _mediator.Send(new GetEmployeeDetailsQuery() { Id = id });
+            var employeeDetails = await _mediator.Send(new GetEmployeeDetailsQuery() { Id = id }, token);
+
+            if (employeeDetails is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(employeeDetails);
         }
     }
 

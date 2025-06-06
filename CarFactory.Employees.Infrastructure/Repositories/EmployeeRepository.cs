@@ -11,7 +11,7 @@ public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
     }
 
-    public async Task<EmployeeDetails> GetEmployeeDetailsAsync(Guid id, CancellationToken token)
+    public async Task<EmployeeDetails?> GetEmployeeDetailsAsync(Guid id, CancellationToken token)
     {
         return await _dbSet
             .AsNoTracking()
@@ -23,6 +23,6 @@ public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
                     PersonalId = y.PersonalId,
                     DateOfBirth = y.DateOfBirth
                 })
-            .SingleAsync(token);
+            .SingleOrDefaultAsync(token);
     }
 }
