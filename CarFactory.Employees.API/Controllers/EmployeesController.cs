@@ -16,10 +16,23 @@ namespace CarFactory.Employees.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("details-by-id/{id}")]
         public async Task<ActionResult<EmployeeDetails>> EmployeeDetails(Guid id, CancellationToken token)
         {
             var employeeDetails = await _mediator.Send(new GetEmployeeDetailsQuery() { Id = id }, token);
+
+            if (employeeDetails is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(employeeDetails);
+        }
+
+        [HttpGet("details-by-personalId/{personalId}")]
+        public async Task<ActionResult<EmployeeDetails>> EmployeeDetailsByPersonalId(PersonalId personalId, CancellationToken token)
+        {
+            var employeeDetails = await _mediator.Send(new GetEmployeeDetailsByPersonalIdQuery() { PersonalId = personalId }, token);
 
             if (employeeDetails is null)
             {
