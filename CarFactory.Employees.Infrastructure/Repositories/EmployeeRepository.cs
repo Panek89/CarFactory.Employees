@@ -25,4 +25,19 @@ public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
                 })
             .SingleOrDefaultAsync(token);
     }
+
+    public async Task<EmployeeDetails?> GetEmployeeDetailsAsync(PersonalId personalId, CancellationToken token)
+    {
+        return await _dbSet
+            .AsNoTracking()
+            .Where(x => x.PersonalId == personalId)
+            .Select(y => new EmployeeDetails
+                {
+                    FirstName = y.FirstName,
+                    LastName = y.LastName,
+                    PersonalId = y.PersonalId,
+                    DateOfBirth = y.DateOfBirth
+                })
+            .SingleOrDefaultAsync(token);
+    }
 }
