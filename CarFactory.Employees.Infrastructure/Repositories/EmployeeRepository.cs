@@ -1,3 +1,4 @@
+using CarFactory.Employees.Domain.Contracts;
 using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.Domain.ValueObjects;
@@ -16,13 +17,7 @@ public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
         return await _dbSet
             .AsNoTracking()
             .Where(x => x.Id == id)
-            .Select(y => new EmployeeDetails
-                {
-                    FirstName = y.FirstName,
-                    LastName = y.LastName,
-                    PersonalId = y.PersonalId,
-                    DateOfBirth = y.DateOfBirth
-                })
+            .Select(y => y.MapToEmployeeDetails())
             .SingleOrDefaultAsync(token);
     }
 
@@ -31,13 +26,7 @@ public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
         return await _dbSet
             .AsNoTracking()
             .Where(x => x.PersonalId == personalId)
-            .Select(y => new EmployeeDetails
-                {
-                    FirstName = y.FirstName,
-                    LastName = y.LastName,
-                    PersonalId = y.PersonalId,
-                    DateOfBirth = y.DateOfBirth
-                })
+            .Select(y => y.MapToEmployeeDetails())
             .SingleOrDefaultAsync(token);
     }
 }
