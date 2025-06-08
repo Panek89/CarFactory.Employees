@@ -1,6 +1,7 @@
 ﻿using CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
 using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 using CarFactory.Employees.Application.Features.EmployeeRequests.Queries;
+using CarFactory.Employees.Domain.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,13 @@ namespace CarFactory.Employees.API.Controllers
         public EmployeeRequestsController(ISender mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        [HttpGet("actual-requests-details")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IEnumerable<EmployeeRequestDetails>> ActualRequestsDetails(CancellationToken cancellationToken)
+        {
+            return await _mediator.Send(new GetActualRequestesDetailsQuery(), cancellationToken);
         }
 
         [HttpGet]
