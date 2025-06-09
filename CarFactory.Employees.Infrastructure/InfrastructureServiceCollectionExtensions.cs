@@ -9,6 +9,7 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IEmployeeRequestRepository, EmployeeRequestRepository>();
         services.AddScoped<IEmployeeRequestCandidateRepository, EmployeeRequestCandidateRepository>();
 
