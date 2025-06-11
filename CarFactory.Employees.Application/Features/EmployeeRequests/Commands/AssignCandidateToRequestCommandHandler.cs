@@ -1,5 +1,4 @@
 ﻿using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
-using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.SharedLibrary.Enums;
 using MediatR;
@@ -9,34 +8,32 @@ namespace CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
 public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCandidateToRequestCommand, EmployeeRequestCandidateDto?>
 {
     private readonly IEmployeeRequestRepository _employeeRequestRepository;
-    private readonly IEmployeeRequestCandidateRepository _candidateRepository;
 
-    public AssignCandidateToRequestCommandHandler(IEmployeeRequestRepository employeeRequestRepository, IEmployeeRequestCandidateRepository candidateRepository)
+    public AssignCandidateToRequestCommandHandler(IEmployeeRequestRepository employeeRequestRepository)
     {
         _employeeRequestRepository = employeeRequestRepository ?? throw new ArgumentNullException(nameof(employeeRequestRepository));
-        _candidateRepository = candidateRepository ?? throw new ArgumentNullException(nameof(candidateRepository));
     }
 
     public async Task<EmployeeRequestCandidateDto?> Handle(AssignCandidateToRequestCommand command, CancellationToken cancellationToken)
     {
-        var employeeRequest = await _employeeRequestRepository.GetByIdAsync(command.EmployeeRequestId, cancellationToken);
+        var employeeRequest = await _employeeRequestRepository.GetRequestWithCandidatesAsync(command.EmployeeRequestId, cancellationToken);
+
         if (employeeRequest is null)
         {
             return null;
         }
 
-        var employeeRequestCandidate = EmployeeRequestCandidate.Register
+        var employeeRequestCandidate = employeeRequest.AssignCandidate
         (
+            employeeRequest,
             command.FirstName,
             command.LastName,
             command.PersonalId,
             command.Gender,
-            command.DateOfBirth,
-            employeeRequest
+            command.DateOfBirth
         );
 
-        await _candidateRepository.AddAsync(employeeRequestCandidate, cancellationToken);
-        await _candidateRepository.SaveChangesAsync(cancellationToken);
+        await _employeeRequestRepository.SaveChangesAsync(cancellationToken);
 
         return employeeRequestCandidate.MapToDto();
     }
