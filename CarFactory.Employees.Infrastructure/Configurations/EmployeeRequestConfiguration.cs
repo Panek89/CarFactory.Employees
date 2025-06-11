@@ -11,11 +11,12 @@ public class EmployeeRequestConfiguration : IEntityTypeConfiguration<EmployeeReq
         builder.ToTable("EMPLOYEE_REQUESTS");
 
         builder.HasKey(k => k.Id);
+        builder.Property(p => p.Id).ValueGeneratedNever();
 
         builder.HasMany(e => e.Candidates)
-            .WithOne(c => c.EmployeeRequest)
-            .HasForeignKey(c => c.EmployeeRequestId)
-            .IsRequired();
+            .WithOne()
+            .HasForeignKey("EMPLOYEE_REQUEST_ID")
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(p => p.Business)
             .HasMaxLength(50)

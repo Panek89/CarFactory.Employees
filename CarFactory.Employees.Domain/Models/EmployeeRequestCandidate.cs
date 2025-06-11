@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.Domain.ExtensionMethods;
+﻿using CarFactory.Employees.Domain.Common;
+using CarFactory.Employees.Domain.ExtensionMethods;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
 
@@ -9,7 +10,6 @@ public class EmployeeRequestCandidate : BaseEntity
     private Gender _gender;
     private DateTime _dateOfBirth;
     private EmployeeCandidateStatus _status;
-    private EmployeeRequest _employeeRequest = null!;
 
     public FirstName FirstName { get; private set; } = null!;
     public LastName LastName { get; private set; } = null!;
@@ -69,22 +69,6 @@ public class EmployeeRequestCandidate : BaseEntity
         }
     }
 
-    public Guid EmployeeRequestId { get; private set; }
-    public EmployeeRequest EmployeeRequest
-    {
-        get => _employeeRequest;
-        private set
-        {
-            if (value is null)
-            {
-                throw new ArgumentNullException(nameof(EmployeeRequest), "Request must have a value");
-            }
-
-            EmployeeRequestId = value.Id;
-            _employeeRequest = value;
-        }
-    }
-
     private EmployeeRequestCandidate() { }
 
     private EmployeeRequestCandidate
@@ -94,8 +78,7 @@ public class EmployeeRequestCandidate : BaseEntity
         PersonalId personalId,
         Gender gender,
         DateTime dateOfBirth,
-        EmployeeCandidateStatus status,
-        EmployeeRequest employeeRequest
+        EmployeeCandidateStatus status
     )
     {
         FirstName = firstName;
@@ -104,7 +87,6 @@ public class EmployeeRequestCandidate : BaseEntity
         Gender = gender;
         DateOfBirth = dateOfBirth;
         Status = status;
-        EmployeeRequest = employeeRequest;
     }
 
     public static EmployeeRequestCandidate Register
@@ -113,8 +95,7 @@ public class EmployeeRequestCandidate : BaseEntity
         string lastName,
         PersonalId personalId,
         Gender gender,
-        DateTime dateOfBirth,
-        EmployeeRequest employeeRequest
+        DateTime dateOfBirth
     )
     {
         return new EmployeeRequestCandidate
@@ -124,8 +105,7 @@ public class EmployeeRequestCandidate : BaseEntity
             personalId,
             gender,
             dateOfBirth,
-            EmployeeCandidateStatus.Candidate,
-            employeeRequest
+            EmployeeCandidateStatus.Candidate
         ).SetInitialMetaData();
     }
 }

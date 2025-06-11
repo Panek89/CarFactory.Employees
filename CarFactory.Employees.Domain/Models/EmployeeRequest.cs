@@ -1,4 +1,6 @@
-﻿using CarFactory.Employees.Domain.ExtensionMethods;
+﻿using CarFactory.Employees.Domain.Common;
+using CarFactory.Employees.Domain.Events.EmployeeRequest;
+using CarFactory.Employees.Domain.ExtensionMethods;
 using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.Models;
@@ -94,5 +96,14 @@ public class EmployeeRequest : BaseEntity
             startDate,
             EmployeeRequestStatus.Registered
         ).SetInitialMetaData();
+    }
+
+    public EmployeeRequestCandidate AssignCandidate(EmployeeRequest employeeRequest, string firstName, string lastName, string personalId, Gender gender, DateTime dateOfBirth)
+    {
+        var employeeRequestCandidate = EmployeeRequestCandidate.Register(firstName, lastName, personalId, gender, dateOfBirth);
+        employeeRequest.Candidates.Add(employeeRequestCandidate);
+        RaiseDomainEvent(new AssignedCandidateEvent(employeeRequest.Id));
+
+        return employeeRequestCandidate;
     }
 }
