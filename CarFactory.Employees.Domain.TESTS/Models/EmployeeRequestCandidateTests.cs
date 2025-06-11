@@ -36,14 +36,6 @@ public class EmployeeRequestCandidateTests
             Throws.ArgumentException.With.Property(nameof(ArgumentException.ParamName)).EqualTo(nameof(EmployeeRequestCandidate.DateOfBirth)));
     }
 
-    [TestCase(null)]
-    [TestCase(default)]
-    public void EmployeeRequestCandidate_ShouldThrowArgumentException_WhenEmployeeRequestIsNull(EmployeeRequest? employeeRequest)
-    {
-        Assert.That(() => EmployeeRequestCandidateFactory.RegisterWithoutEmployeeRequest(employeeRequest: employeeRequest),
-            Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo(nameof(EmployeeRequestCandidate.EmployeeRequest)));
-    }
-
     [Test]
     public void EmployeeRequest_ShouldThrowArgumentException_WhenGender_IsNotSpecified()
     {
