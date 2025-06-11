@@ -102,7 +102,7 @@ public class EmployeeRequest : BaseEntity
     {
         var employeeRequestCandidate = EmployeeRequestCandidate.Register(firstName, lastName, personalId, gender, dateOfBirth);
         employeeRequest.Candidates.Add(employeeRequestCandidate);
-        RaiseDomainEvent(new AssignedCandidateEvent(employeeRequest.Id));
+        employeeRequest.RaiseDomainEvent(new AssignedCandidateEvent(employeeRequest.Id));
 
         return employeeRequestCandidate;
     }
