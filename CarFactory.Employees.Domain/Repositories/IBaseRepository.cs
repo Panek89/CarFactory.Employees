@@ -1,4 +1,4 @@
-﻿using CarFactory.Employees.Domain.Models;
+﻿using CarFactory.Employees.Domain.Common;
 
 namespace CarFactory.Employees.Domain.Repositories;
 

@@ -1,4 +1,4 @@
-﻿using CarFactory.Employees.Domain.Models;
+﻿using CarFactory.Employees.Domain.Common;
 using CarFactory.Employees.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.Domain.ExtensionMethods;
+﻿using CarFactory.Employees.Domain.Common;
+using CarFactory.Employees.Domain.ExtensionMethods;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.SharedLibrary.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
