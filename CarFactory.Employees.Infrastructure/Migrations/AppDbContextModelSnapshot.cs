@@ -90,7 +90,6 @@ namespace CarFactory.Employees.Infrastructure.Migrations
             modelBuilder.Entity("CarFactory.Employees.Domain.Models.EmployeeRequest", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Business")
@@ -136,7 +135,6 @@ namespace CarFactory.Employees.Infrastructure.Migrations
             modelBuilder.Entity("CarFactory.Employees.Domain.Models.EmployeeRequestCandidate", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -151,7 +149,7 @@ namespace CarFactory.Employees.Infrastructure.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EmployeeRequestId")
+                    b.Property<Guid>("EMPLOYEE_REQUEST_ID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
@@ -192,20 +190,18 @@ namespace CarFactory.Employees.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeRequestId");
+                    b.HasIndex("EMPLOYEE_REQUEST_ID");
 
                     b.ToTable("EMPLOYEE_REQUEST_CANIDATES", (string)null);
                 });
 
             modelBuilder.Entity("CarFactory.Employees.Domain.Models.EmployeeRequestCandidate", b =>
                 {
-                    b.HasOne("CarFactory.Employees.Domain.Models.EmployeeRequest", "EmployeeRequest")
+                    b.HasOne("CarFactory.Employees.Domain.Models.EmployeeRequest", null)
                         .WithMany("Candidates")
-                        .HasForeignKey("EmployeeRequestId")
+                        .HasForeignKey("EMPLOYEE_REQUEST_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("EmployeeRequest");
                 });
 
             modelBuilder.Entity("CarFactory.Employees.Domain.Models.EmployeeRequest", b =>

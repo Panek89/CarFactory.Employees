@@ -27,8 +27,7 @@ public class EmployeeRequestCandidateFactory
             lastName ?? _correctLastName,
             personalId ?? _correctPersonalId,
             gender ?? Gender.Male,
-            dateOfBirth ?? _correctDateOfBirth,
-            employeeRequest ?? EmployeeRequestFactory.Register()
+            dateOfBirth ?? _correctDateOfBirth
         );
     }
 
@@ -48,8 +47,7 @@ public class EmployeeRequestCandidateFactory
             lastName ?? _correctLastName,
             personalId ?? _correctPersonalId,
             gender ?? Gender.Male,
-            dateOfBirth ?? _correctDateOfBirth,
-            employeeRequest!
+            dateOfBirth ?? _correctDateOfBirth
         );
     }
 }

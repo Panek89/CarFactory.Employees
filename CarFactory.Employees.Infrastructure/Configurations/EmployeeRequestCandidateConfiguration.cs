@@ -12,6 +12,9 @@ public class EmployeeRequestCandidateConfiguration : IEntityTypeConfiguration<Em
 
         builder.HasKey(k => k.Id);
 
+        builder.Property(p => p.Id).ValueGeneratedNever();
+        builder.Property<Guid>("EMPLOYEE_REQUEST_ID").ValueGeneratedNever(); ;
+
         builder.FirstNameConfiguration();
         builder.LastNameConfiguration();
         builder.PersonalIdConfiguration();

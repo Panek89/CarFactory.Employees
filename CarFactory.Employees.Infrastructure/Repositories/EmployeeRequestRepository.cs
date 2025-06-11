@@ -12,6 +12,11 @@ public class EmployeeRequestRepository : BaseRepository<EmployeeRequest>, IEmplo
     { 
     }
 
+    public async Task<EmployeeRequest?> GetRequestWithCandidatesAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _dbSet.Include(i => i.Candidates).SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
     public async Task<IEnumerable<EmployeeRequestDetails>> ActualRequestsDetailsAsync(CancellationToken token)
     {
         return await _dbSet.AsNoTracking()

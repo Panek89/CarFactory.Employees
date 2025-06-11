@@ -11,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure();
 builder.Services.AddDatabase(builder.Configuration.GetConnectionString("SQLSERVER")!);
 builder.Services.AddApplication();
+builder.Services.RegisterEvents();
 
 var app = builder.Build();
 
