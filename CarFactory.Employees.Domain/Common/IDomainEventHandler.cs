@@ -1,5 +1,3 @@
-using CarFactory.Employees.Domain.Models;
-
 namespace CarFactory.Employees.Domain.Common;
 
 public interface IDomainEventHandler<in T> where T : DomainEvent
