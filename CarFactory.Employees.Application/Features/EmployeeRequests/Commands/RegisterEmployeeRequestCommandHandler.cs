@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
 
-public class RegisterEmployeeRequestCommandHandler : IRequestHandler<RegisterEmployeeRequestCommand, EmployeeRequestDto>
+public class RegisterEmployeeRequestCommandHandler : IRequestHandler<RegisterEmployeeRequestCommand, EmployeeRequestDetailsDto>
 {
     private readonly IEmployeeRequestRepository _employeeRequestRepository;
 
@@ -14,7 +14,7 @@ public class RegisterEmployeeRequestCommandHandler : IRequestHandler<RegisterEmp
         _employeeRequestRepository = employeeRequestRepository ?? throw new ArgumentNullException(nameof(employeeRequestRepository));
     }
 
-    public async Task<EmployeeRequestDto> Handle(RegisterEmployeeRequestCommand command, CancellationToken token)
+    public async Task<EmployeeRequestDetailsDto> Handle(RegisterEmployeeRequestCommand command, CancellationToken token)
     {
         var employeeRequest = EmployeeRequest.Register(command.NoOfEmployeesNeeded, command.Business, command.StartDate);
         await _employeeRequestRepository.AddAsync(employeeRequest, token);
@@ -24,7 +24,7 @@ public class RegisterEmployeeRequestCommandHandler : IRequestHandler<RegisterEmp
     }
 }
 
-public class RegisterEmployeeRequestCommand : IRequest<EmployeeRequestDto>
+public class RegisterEmployeeRequestCommand : IRequest<EmployeeRequestDetailsDto>
 {
     public int NoOfEmployeesNeeded { get; init; }
     public required string Business { get; init; }

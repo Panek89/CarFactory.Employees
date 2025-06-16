@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
 
-public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCandidateToRequestCommand, EmployeeRequestCandidateDto?>
+public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCandidateToRequestCommand, EmployeeRequestCandidateDetailsDto?>
 {
     private readonly IEmployeeRequestRepository _employeeRequestRepository;
     private readonly IDomainEventDispatcher _eventDispatcher;
@@ -17,7 +17,7 @@ public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCand
         _eventDispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
     }
 
-    public async Task<EmployeeRequestCandidateDto?> Handle(AssignCandidateToRequestCommand command, CancellationToken cancellationToken)
+    public async Task<EmployeeRequestCandidateDetailsDto?> Handle(AssignCandidateToRequestCommand command, CancellationToken cancellationToken)
     {
         var employeeRequest = await _employeeRequestRepository.GetRequestWithCandidatesAsync(command.EmployeeRequestId, cancellationToken);
 
@@ -45,7 +45,7 @@ public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCand
     }
 }
 
-public class AssignCandidateToRequestCommand : IRequest<EmployeeRequestCandidateDto?>
+public class AssignCandidateToRequestCommand : IRequest<EmployeeRequestCandidateDetailsDto?>
 {
     public Guid EmployeeRequestId { get; init; }
     public required string FirstName { get; init; }

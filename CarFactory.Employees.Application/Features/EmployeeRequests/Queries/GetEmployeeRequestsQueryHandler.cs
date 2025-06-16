@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.Queries;
 
-public class GetEmployeeRequestsQueryHandler : IRequestHandler<GetEmployeeRequestsQuery, IEnumerable<EmployeeRequestDto>>
+public class GetEmployeeRequestsQueryHandler : IRequestHandler<GetEmployeeRequestsQuery, IEnumerable<EmployeeRequestDetailsDto>>
 {
     private readonly IEmployeeRequestRepository _employeeRequestRepository;
 
@@ -13,12 +13,12 @@ public class GetEmployeeRequestsQueryHandler : IRequestHandler<GetEmployeeReques
         _employeeRequestRepository = employeeRequestRepository ?? throw new ArgumentNullException(nameof(employeeRequestRepository));
     }
 
-    public async Task<IEnumerable<EmployeeRequestDto>> Handle(GetEmployeeRequestsQuery query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<EmployeeRequestDetailsDto>> Handle(GetEmployeeRequestsQuery query, CancellationToken cancellationToken)
     {
         return (await _employeeRequestRepository.GetAllAsync(cancellationToken)).MapToDtos();
     }
 }
 
-public class GetEmployeeRequestsQuery : IRequest<IEnumerable<EmployeeRequestDto>>
+public class GetEmployeeRequestsQuery : IRequest<IEnumerable<EmployeeRequestDetailsDto>>
 {
 }
