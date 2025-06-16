@@ -32,6 +32,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(InfrastructureMarker).Assembly);
     }
 
+    public DbSet<Employee> Employees { get; set; }
     public DbSet<EmployeeRequest> EmployeeRequests { get; set; }
     public DbSet<EmployeeRequestCandidate> EmployeeRequestCandidates { get; set; }
 }
