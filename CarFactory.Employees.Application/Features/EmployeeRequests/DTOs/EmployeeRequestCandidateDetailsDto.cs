@@ -2,7 +2,7 @@
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 
-public class EmployeeRequestCandidateDto
+public class EmployeeRequestCandidateDetailsDto
 {
     public required string FirstName { get; init; }
     public required string LastName { get; init; }

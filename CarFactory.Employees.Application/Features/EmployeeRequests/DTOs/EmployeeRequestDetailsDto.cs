@@ -2,7 +2,7 @@
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 
-public class EmployeeRequestDto
+public class EmployeeRequestDetailsDto
 {
     public Guid Id { get; init; }
     public int NoOfEmployeesNeeded { get; init; }
