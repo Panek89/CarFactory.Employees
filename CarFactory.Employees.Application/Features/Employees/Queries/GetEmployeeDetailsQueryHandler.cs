@@ -1,10 +1,10 @@
+using CarFactory.Employees.Application.Features.Employees.DTOs;
 using CarFactory.Employees.Domain.Repositories;
-using CarFactory.Employees.Domain.ValueObjects;
 using MediatR;
 
 namespace CarFactory.Employees.Application.Features.Employees.Queries;
 
-public class GetEmployeeDetailsQueryHandler : IRequestHandler<GetEmployeeDetailsQuery, EmployeeDetails?>
+public class GetEmployeeDetailsQueryHandler : IRequestHandler<GetEmployeeDetailsQuery, EmployeeDetailsDto?>
 {
     private readonly IEmployeeRepository _employeeRepository;
 
@@ -13,13 +13,13 @@ public class GetEmployeeDetailsQueryHandler : IRequestHandler<GetEmployeeDetails
         _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
     }
 
-    public async Task<EmployeeDetails?> Handle(GetEmployeeDetailsQuery query, CancellationToken cancellationToken)
+    public async Task<EmployeeDetailsDto?> Handle(GetEmployeeDetailsQuery query, CancellationToken cancellationToken)
     {
         return await _employeeRepository.GetEmployeeDetailsAsync(query.Id, cancellationToken);
     }
 }
 
-public class GetEmployeeDetailsQuery : IRequest<EmployeeDetails?>
+public class GetEmployeeDetailsQuery : IRequest<EmployeeDetailsDto?>
 {
     public Guid Id { get; init; }
 }
