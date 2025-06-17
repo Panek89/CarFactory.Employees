@@ -7,16 +7,16 @@ namespace CarFactory.Employees.Application.Features.Employees.Queries;
 
 public class GetEmployeeDetailsByPersonalIdQueryHandler : IRequestHandler<GetEmployeeDetailsByPersonalIdQuery, EmployeeDetailsDto?>
 {
-    private readonly IEmployeeRepository _employeeRepository;
+    private readonly IEmployeeService _employeeService;
 
-    public GetEmployeeDetailsByPersonalIdQueryHandler(IEmployeeRepository employeeRepository)
+    public GetEmployeeDetailsByPersonalIdQueryHandler(IEmployeeService employeeService)
     {
-        _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+        _employeeService = employeeService ?? throw new ArgumentNullException(nameof(employeeService));
     }
 
     public async Task<EmployeeDetailsDto?> Handle(GetEmployeeDetailsByPersonalIdQuery query, CancellationToken cancellationToken)
     {
-        return await _employeeRepository.GetEmployeeDetailsAsync(query.PersonalId, cancellationToken);
+        return await _employeeService.GetEmployeeDetailsAsync(query.PersonalId, cancellationToken);
     }
 }
 

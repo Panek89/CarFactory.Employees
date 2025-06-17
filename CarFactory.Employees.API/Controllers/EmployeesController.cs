@@ -1,3 +1,4 @@
+using CarFactory.Employees.Application.Features.Employees.DTOs;
 using CarFactory.Employees.Application.Features.Employees.Queries;
 using CarFactory.Employees.Domain.ValueObjects;
 using MediatR;
@@ -17,7 +18,7 @@ namespace CarFactory.Employees.API.Controllers
         }
 
         [HttpGet("details-by-id/{id}")]
-        public async Task<ActionResult<EmployeeDetails>> EmployeeDetails(Guid id, CancellationToken token)
+        public async Task<ActionResult<EmployeeDetailsDto>> EmployeeDetails(Guid id, CancellationToken token)
         {
             var employeeDetails = await _mediator.Send(new GetEmployeeDetailsQuery() { Id = id }, token);
 
@@ -30,7 +31,7 @@ namespace CarFactory.Employees.API.Controllers
         }
 
         [HttpGet("details-by-personalId/{personalId}")]
-        public async Task<ActionResult<EmployeeDetails>> EmployeeDetailsByPersonalId(PersonalId personalId, CancellationToken token)
+        public async Task<ActionResult<EmployeeDetailsDto>> EmployeeDetailsByPersonalId(PersonalId personalId, CancellationToken token)
         {
             var employeeDetails = await _mediator.Send(new GetEmployeeDetailsByPersonalIdQuery() { PersonalId = personalId }, token);
 
