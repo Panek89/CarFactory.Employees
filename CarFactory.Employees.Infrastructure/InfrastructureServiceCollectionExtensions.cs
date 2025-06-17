@@ -1,7 +1,10 @@
-﻿using CarFactory.Employees.Domain.Common;
+﻿using CarFactory.Employees.Application.Features.EmployeeRequests;
+using CarFactory.Employees.Application.Features.Employees;
+using CarFactory.Employees.Domain.Common;
 using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.Infrastructure.Events;
 using CarFactory.Employees.Infrastructure.Repositories;
+using CarFactory.Employees.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +17,10 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IEmployeeRequestRepository, EmployeeRequestRepository>();
         services.AddScoped<IEmployeeRequestCandidateRepository, EmployeeRequestCandidateRepository>();
-       
+
+        services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IEmployeeRequestService, EmployeeRequestService>();
+
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 
         return services;
