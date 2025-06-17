@@ -17,6 +17,7 @@ public class EmployeeRequestService : IEmployeeRequestService
     public async Task<IEnumerable<EmployeeRequestDetailsDto>> ActualRequestsDetailsAsync(CancellationToken cancellationToken)
     {
         return await _employeeRequests.Where(x => x.StartDate > DateTime.Today)
+            .Include(i => i.Candidates)
             .Select(s => s.MapToDto())
             .AsNoTracking()
             .ToListAsync();

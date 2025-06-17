@@ -9,4 +9,5 @@ public class EmployeeRequestDetailsDto
     public required string Business { get; init; }
     public DateTime StartDate { get; init; }
     public EmployeeRequestStatus Status { get; init; }
+    public IEnumerable<EmployeeRequestCandidateDetailsDto> CandidateDetails { get; init; } = [];
 }

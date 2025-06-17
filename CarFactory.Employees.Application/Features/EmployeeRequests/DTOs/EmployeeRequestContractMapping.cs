@@ -12,7 +12,8 @@ public static class EmployeeRequestContractMapping
             NoOfEmployeesNeeded = employeeRequest.NumberOfEmployeesNeeded,
             Business = employeeRequest.Business,
             StartDate = employeeRequest.StartDate,
-            Status = employeeRequest.Status
+            Status = employeeRequest.Status,
+            CandidateDetails = employeeRequest.Candidates.MapToDtos()
         };
     }
 
