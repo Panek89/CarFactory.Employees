@@ -4,26 +4,27 @@ namespace CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 
 public static class EmployeeRequestContractMapping
 {
-    public static EmployeeRequestDto MapToDto(this EmployeeRequest employeeRequest)
+    public static EmployeeRequestDetailsDto MapToDto(this EmployeeRequest employeeRequest)
     {
-        return new EmployeeRequestDto()
+        return new EmployeeRequestDetailsDto()
         {
             Id = employeeRequest.Id,
             NoOfEmployeesNeeded = employeeRequest.NumberOfEmployeesNeeded,
             Business = employeeRequest.Business,
             StartDate = employeeRequest.StartDate,
-            Status = employeeRequest.Status
+            Status = employeeRequest.Status,
+            CandidateDetails = employeeRequest.Candidates.MapToDtos()
         };
     }
 
-    public static IEnumerable<EmployeeRequestDto> MapToDtos(this IEnumerable<EmployeeRequest> employeeRequests)
+    public static IEnumerable<EmployeeRequestDetailsDto> MapToDtos(this IEnumerable<EmployeeRequest> employeeRequests)
     {
         return employeeRequests.Select(MapToDto);
     }
 
-    public static EmployeeRequestCandidateDto MapToDto(this EmployeeRequestCandidate employeeRequestCandidate) 
+    public static EmployeeRequestCandidateDetailsDto MapToDto(this EmployeeRequestCandidate employeeRequestCandidate) 
     {
-        return new EmployeeRequestCandidateDto()
+        return new EmployeeRequestCandidateDetailsDto()
         {
             FirstName = employeeRequestCandidate.FirstName,
             LastName = employeeRequestCandidate.LastName,
@@ -33,7 +34,7 @@ public static class EmployeeRequestContractMapping
         };
     }
 
-    public static IEnumerable<EmployeeRequestCandidateDto> MapToDtos(this IEnumerable<EmployeeRequestCandidate> employeeRequestCandidates)
+    public static IEnumerable<EmployeeRequestCandidateDetailsDto> MapToDtos(this IEnumerable<EmployeeRequestCandidate> employeeRequestCandidates)
     {
         return employeeRequestCandidates.Select(MapToDto);
     }

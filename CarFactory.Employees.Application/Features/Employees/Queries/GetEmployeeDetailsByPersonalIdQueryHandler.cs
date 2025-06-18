@@ -1,26 +1,27 @@
+using CarFactory.Employees.Application.Features.Employees.DTOs;
 using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.Domain.ValueObjects;
 using MediatR;
 
 namespace CarFactory.Employees.Application.Features.Employees.Queries;
 
-public class GetEmployeeDetailsByPersonalIdQueryHandler : IRequestHandler<GetEmployeeDetailsByPersonalIdQuery, EmployeeDetails?>
+public class GetEmployeeDetailsByPersonalIdQueryHandler : IRequestHandler<GetEmployeeDetailsByPersonalIdQuery, EmployeeDetailsDto?>
 {
-    private readonly IEmployeeRepository _employeeRepository;
+    private readonly IEmployeeService _employeeService;
 
-    public GetEmployeeDetailsByPersonalIdQueryHandler(IEmployeeRepository employeeRepository)
+    public GetEmployeeDetailsByPersonalIdQueryHandler(IEmployeeService employeeService)
     {
-        _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+        _employeeService = employeeService ?? throw new ArgumentNullException(nameof(employeeService));
     }
 
-    public async Task<EmployeeDetails?> Handle(GetEmployeeDetailsByPersonalIdQuery query, CancellationToken cancellationToken)
+    public async Task<EmployeeDetailsDto?> Handle(GetEmployeeDetailsByPersonalIdQuery query, CancellationToken cancellationToken)
     {
-        return await _employeeRepository.GetEmployeeDetailsAsync(query.PersonalId, cancellationToken);
+        return await _employeeService.GetEmployeeDetailsAsync(query.PersonalId, cancellationToken);
     }
 }
 
 
-public class GetEmployeeDetailsByPersonalIdQuery : IRequest<EmployeeDetails?>
+public class GetEmployeeDetailsByPersonalIdQuery : IRequest<EmployeeDetailsDto?>
 {
     public required PersonalId PersonalId { get; init; }
 }
