@@ -23,4 +23,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/car-factory:employees-latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ vars.DOCKER_REPOSITORY }}:${{ vars.DOCKER_TAG }}
