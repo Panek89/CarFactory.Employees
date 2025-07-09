@@ -1,6 +1,6 @@
 ﻿using CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
-using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
 using CarFactory.Employees.Application.Features.EmployeeRequests.Queries;
+using CarFactory.Employees.Contracts.DTOs.EmployeeRequests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

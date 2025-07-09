@@ -1,6 +1,6 @@
 ﻿using CarFactory.Employees.SharedLibrary.Enums;
 
-namespace CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
+namespace CarFactory.Employees.Contracts.DTOs.EmployeeRequests;
 
 public class EmployeeRequestDetailsDto
 {

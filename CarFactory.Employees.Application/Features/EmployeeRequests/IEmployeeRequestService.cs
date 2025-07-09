@@ -1,4 +1,4 @@
-﻿using CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
+﻿using CarFactory.Employees.Contracts.DTOs.EmployeeRequests;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests;
 

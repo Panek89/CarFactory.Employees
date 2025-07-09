@@ -1,5 +1,5 @@
 ﻿using CarFactory.Employees.Application.Features.Employees;
-using CarFactory.Employees.Application.Features.Employees.DTOs;
+using CarFactory.Employees.Contracts.DTOs.Employees;
 using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,6 @@
 ﻿using CarFactory.Employees.Domain.Models;
 
-namespace CarFactory.Employees.Application.Features.EmployeeRequests.DTOs;
+namespace CarFactory.Employees.Contracts.DTOs.EmployeeRequests;
 
 public static class EmployeeRequestContractMapping
 {
