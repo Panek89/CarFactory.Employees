@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarFactory.Employees.Application\CarFactory.Employees.Application.csproj" />
+    <ProjectReference Include="..\CarFactory.Employees.Contracts\CarFactory.Employees.Contracts.csproj" />
     <ProjectReference Include="..\CarFactory.Employees.Domain\CarFactory.Employees.Domain.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿using CarFactory.Employees.Application.Features.Employees.DTOs;
+﻿using CarFactory.Employees.Contracts.DTOs.Employees;
 using CarFactory.Employees.Domain.ValueObjects;
 
 namespace CarFactory.Employees.Application.Features.Employees;

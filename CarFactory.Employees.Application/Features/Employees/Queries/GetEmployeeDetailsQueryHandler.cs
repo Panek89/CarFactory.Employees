@@ -1,5 +1,4 @@
-using CarFactory.Employees.Application.Features.Employees.DTOs;
-using CarFactory.Employees.Domain.Repositories;
+using CarFactory.Employees.Contracts.DTOs.Employees;
 using MediatR;
 
 namespace CarFactory.Employees.Application.Features.Employees.Queries;

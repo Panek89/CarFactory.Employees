@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../CarFactory.Employees.Application/CarFactory.Employees.Application.csproj" />
+    <ProjectReference Include="..\CarFactory.Employees.Contracts\CarFactory.Employees.Contracts.csproj" />
     <ProjectReference Include="..\CarFactory.Employees.Infrastructure\CarFactory.Employees.Infrastructure.csproj" />
     <ProjectReference Include="..\CarFactory.Employees.SharedLibrary\CarFactory.Employees.SharedLibrary.csproj" />
   </ItemGroup>
