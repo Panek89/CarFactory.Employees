@@ -12,6 +12,7 @@ builder.Services.AddInfrastructure();
 builder.Services.AddDatabase(builder.Configuration.GetConnectionString("SQLSERVER")!);
 builder.Services.AddApplication();
 builder.Services.RegisterEvents();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -25,6 +26,7 @@ if (!app.Environment.IsDevelopment())
     app.RegisterNonDevelopment();
 }
 
+app.MapHealthChecks("/healthy");
 
 app.UseAuthorization();
 
