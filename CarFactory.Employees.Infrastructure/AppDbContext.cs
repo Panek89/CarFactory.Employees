@@ -1,4 +1,5 @@
-﻿using CarFactory.Employees.Domain.Models;
+﻿using CarFactory.Employees.Domain.Common;
+using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +8,34 @@ namespace CarFactory.Employees.Infrastructure;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options)
+    private readonly IDomainEventDispatcher _eventDispatcher;
+
+    public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher eventDispatcher)
     : base(options)
     {
+        _eventDispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var result = await base.SaveChangesAsync(cancellationToken);
+
+        if (result > 0)
+        {
+            var aggreagatesWithEvents = ChangeTracker
+                .Entries<AggregateRoot>()
+                .Where(e => e.Entity.DomainEvents.Any())
+                .Select(e => e.Entity)
+                .ToList();
+
+            foreach (var aggregate in aggreagatesWithEvents)
+            {
+                await _eventDispatcher.DispatchAsync(aggregate.DomainEvents);
+                aggregate.ClearDomainEvents();
+            }
+        }
+
+        return result;
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
