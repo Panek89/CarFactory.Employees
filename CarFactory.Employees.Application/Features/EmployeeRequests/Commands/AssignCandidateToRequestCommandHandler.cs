@@ -1,11 +1,10 @@
-﻿using CarFactory.Employees.Contracts.DTOs.EmployeeRequests;
-using CarFactory.Employees.Domain.Repositories;
+﻿using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.SharedLibrary.Enums;
 using MediatR;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
 
-public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCandidateToRequestCommand, EmployeeRequestCandidateDetailsDto?>
+public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCandidateToRequestCommand, Guid?>
 {
     private readonly IEmployeeRequestRepository _employeeRequestRepository;
 
@@ -14,7 +13,7 @@ public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCand
         _employeeRequestRepository = employeeRequestRepository ?? throw new ArgumentNullException(nameof(employeeRequestRepository));
     }
 
-    public async Task<EmployeeRequestCandidateDetailsDto?> Handle(AssignCandidateToRequestCommand command, CancellationToken cancellationToken)
+    public async Task<Guid?> Handle(AssignCandidateToRequestCommand command, CancellationToken cancellationToken)
     {
         var employeeRequest = await _employeeRequestRepository.GetRequestWithCandidatesAsync(command.EmployeeRequestId, cancellationToken);
 
@@ -35,11 +34,11 @@ public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCand
 
         await _employeeRequestRepository.SaveChangesAsync(cancellationToken);
 
-        return employeeRequestCandidate.MapToDto();
+        return employeeRequestCandidate.Id;
     }
 }
 
-public class AssignCandidateToRequestCommand : IRequest<EmployeeRequestCandidateDetailsDto?>
+public class AssignCandidateToRequestCommand : IRequest<Guid?>
 {
     public Guid EmployeeRequestId { get; init; }
     public required string FirstName { get; init; }
