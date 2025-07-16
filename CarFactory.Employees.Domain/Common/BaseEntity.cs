@@ -10,18 +10,4 @@ public abstract class BaseEntity
     public string CreatedBy { get; set; } = null!;
     public DateTime? UpdatedAt { get; set; }
     public string? UpdatedBy { get; set; }
-
-    private readonly List<DomainEvent> _domainEvents = new();
-    [NotMapped]
-    public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
-
-    protected void RaiseDomainEvent(DomainEvent domainEvent)
-    {
-        _domainEvents.Add(domainEvent);
-    }
-
-    public void ClearDomainEvents()
-    {
-        _domainEvents.Clear();
-    }
 }
