@@ -26,11 +26,11 @@ if (!app.Environment.IsDevelopment())
     app.RegisterNonDevelopment();
 }
 
-app.MapHealthChecks("/healthy");
-
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/healthy").AllowAnonymous();
 
 app.RunMigrations();
 

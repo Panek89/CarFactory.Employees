@@ -1,23 +1,19 @@
-﻿using CarFactory.Employees.Contracts.DTOs.EmployeeRequests;
-using CarFactory.Employees.Domain.Common;
-using CarFactory.Employees.Domain.Repositories;
+﻿using CarFactory.Employees.Domain.Repositories;
 using CarFactory.Employees.SharedLibrary.Enums;
 using MediatR;
 
 namespace CarFactory.Employees.Application.Features.EmployeeRequests.Commands;
 
-public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCandidateToRequestCommand, EmployeeRequestCandidateDetailsDto?>
+public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCandidateToRequestCommand, Guid?>
 {
     private readonly IEmployeeRequestRepository _employeeRequestRepository;
-    private readonly IDomainEventDispatcher _eventDispatcher;
 
-    public AssignCandidateToRequestCommandHandler(IEmployeeRequestRepository employeeRequestRepository, IDomainEventDispatcher eventDispatcher)
+    public AssignCandidateToRequestCommandHandler(IEmployeeRequestRepository employeeRequestRepository)
     {
         _employeeRequestRepository = employeeRequestRepository ?? throw new ArgumentNullException(nameof(employeeRequestRepository));
-        _eventDispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
     }
 
-    public async Task<EmployeeRequestCandidateDetailsDto?> Handle(AssignCandidateToRequestCommand command, CancellationToken cancellationToken)
+    public async Task<Guid?> Handle(AssignCandidateToRequestCommand command, CancellationToken cancellationToken)
     {
         var employeeRequest = await _employeeRequestRepository.GetRequestWithCandidatesAsync(command.EmployeeRequestId, cancellationToken);
 
@@ -38,14 +34,11 @@ public class AssignCandidateToRequestCommandHandler : IRequestHandler<AssignCand
 
         await _employeeRequestRepository.SaveChangesAsync(cancellationToken);
 
-        await _eventDispatcher.DispatchAsync(employeeRequest.DomainEvents);
-        employeeRequest.ClearDomainEvents();
-
-        return employeeRequestCandidate.MapToDto();
+        return employeeRequestCandidate.Id;
     }
 }
 
-public class AssignCandidateToRequestCommand : IRequest<EmployeeRequestCandidateDetailsDto?>
+public class AssignCandidateToRequestCommand : IRequest<Guid?>
 {
     public Guid EmployeeRequestId { get; init; }
     public required string FirstName { get; init; }
