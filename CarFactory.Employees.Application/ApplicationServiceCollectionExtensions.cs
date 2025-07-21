@@ -18,6 +18,7 @@ public static class ApplicationServiceCollectionExtensions
     public static IServiceCollection RegisterEvents(this IServiceCollection services)
     {
         services.AddScoped<IDomainEventHandler<AssignedCandidateEvent>, AssignedCandidateEventHandler>();
+        services.AddScoped<IDomainEventHandler<RegisterEmployeeRequestEvent>, RegisterEmployeeRequestEventHandler>();
 
         return services;
     }

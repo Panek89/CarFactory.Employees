@@ -5,7 +5,7 @@ using CarFactory.Employees.SharedLibrary.Enums;
 
 namespace CarFactory.Employees.Domain.Models;
 
-public class EmployeeRequest : BaseEntity
+public class EmployeeRequest : AggregateRoot
 {
     private int _numberOfEmployeesNeeded;
     private string _business = null!;
@@ -89,13 +89,17 @@ public class EmployeeRequest : BaseEntity
 
     public static EmployeeRequest Register(int numberOfEmployeesNeeded, string business, DateTime startDate)
     {
-        return new EmployeeRequest
+        var employeeRequest = new EmployeeRequest
         (
             numberOfEmployeesNeeded,
             business,
             startDate,
             EmployeeRequestStatus.Registered
         ).SetInitialMetaData();
+
+        employeeRequest.RaiseDomainEvent(new RegisterEmployeeRequestEvent(employeeRequest.Id, employeeRequest.NumberOfEmployeesNeeded, employeeRequest.Business));
+
+        return employeeRequest;
     }
 
     public EmployeeRequestCandidate AssignCandidate(EmployeeRequest employeeRequest, string firstName, string lastName, string personalId, Gender gender, DateTime dateOfBirth)
