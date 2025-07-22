@@ -2,9 +2,12 @@
 using CarFactory.Employees.Application.Features.Employees;
 using CarFactory.Employees.Domain.Common;
 using CarFactory.Employees.Domain.Repositories;
+using CarFactory.Employees.Infrastructure.Consumers;
 using CarFactory.Employees.Infrastructure.Events;
 using CarFactory.Employees.Infrastructure.Repositories;
 using CarFactory.Employees.Infrastructure.Services;
+using CarFactory.Employees.SharedLibrary.Options;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +33,29 @@ public static class InfrastructureServiceCollectionExtensions
     {
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
+
+        return services;
+    }
+
+    public static IServiceCollection RegisterMassTransit(this IServiceCollection services, AppSettingsConfiguration configuration)
+    {
+        services.AddMassTransit(conf =>
+        {
+            conf.AddConsumer<FactoryCreatedConsumer>();
+            conf.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration.RabbitMq.HostName, "/", h =>
+                {
+                    h.Username(configuration.RabbitMq.Username);
+                    h.Password(configuration.RabbitMq.Password);
+                });
+
+                cfg.ReceiveEndpoint(configuration.Contracts.FactoriesQueue, e =>
+                {
+                    e.ConfigureConsumer<FactoryCreatedConsumer>(context);
+                });
+            });
+        });
 
         return services;
     }
