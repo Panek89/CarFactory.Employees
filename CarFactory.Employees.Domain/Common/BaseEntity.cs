@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CarFactory.Employees.Domain.Common;
+﻿namespace CarFactory.Employees.Domain.Common;
 
 public abstract class BaseEntity
 {

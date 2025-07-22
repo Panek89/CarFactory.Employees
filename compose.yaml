@@ -17,6 +17,30 @@ services:
     networks:
       - carfactory-employees-network
 
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+      - ${RABBITMQ_PORT_MANAGEMENT}:${RABBITMQ_PORT_MANAGEMENT}
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    configs:
+      - source: rabbitmq-plugins
+        target: /etc/rabbitmq/enabled_plugins
+    volumes:
+      - rabbitmq-lib:/var/lib/rabbitmq/
+      - rabbitmq-log:/var/log/rabbitmq
+    networks:
+      - carfactory-employees-network
+
   api:
     build:
       context: .
@@ -26,14 +50,30 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:${API_PORT}
       - ConnectionStrings__SQLSERVER=Server=mssql,${DB_PORT};Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};Trust Server Certificate=true;
+      - AppSettingsConfiguration__RabbitMq__HostName=${RABBITMQ_SERVICE_NAME}
+      - AppSettingsConfiguration__RabbitMq__Username=${RABBITMQ_USER}
+      - AppSettingsConfiguration__RabbitMq__Password=${RABBITMQ_PASSWORD}
+      - AppSettingsConfiguration__Contracts__FactoriesQueue=${FACTORY_QUEUE}
     ports:
       - "${API_PORT}:${API_PORT}"
     depends_on:
       mssql:
-        condition: service_healthy  
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - carfactory-employees-network
 
 networks:
   carfactory-employees-network:
     driver: bridge
+
+configs:
+  rabbitmq-plugins:
+    content: "[rabbitmq_management]."  
+
+volumes:
+  rabbitmq-lib:
+    driver: local
+  rabbitmq-log:
+    driver: local
