@@ -29,9 +29,11 @@ namespace CarFactory.Employees.API.Controllers
                 ["password"] = request.Password
             };
 
+            var url = $"http://{_keycloakConfiguration.Host}:{_keycloakConfiguration.Port}/realms/{_keycloakConfiguration.Realm}/protocol/openid-connect/token";
+            Console.WriteLine($"AuthController URL: {url}");
             var content = new FormUrlEncodedContent(parameters);
-
-            var response = await _httpClient.PostAsync("http://localhost:8080/realms/myrealm/protocol/openid-connect/token", content);
+            
+            var response = await _httpClient.PostAsync(url, content);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             return Content(responseBody, "application/json");
