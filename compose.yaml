@@ -46,6 +46,7 @@ services:
     environment:
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: ${KEYCLOAK_PORT}
+      KC_HOSTNAME_STRICT: "true"
       KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
@@ -57,7 +58,7 @@ services:
       timeout: 5s
       retries: 15
       start_period: 60s
-    command: ["start-dev", "--http-port", "${KEYCLOAK_PORT}"]
+    command: ["start-dev", "--http-port", "${KEYCLOAK_PORT}", "--hostname", "${KEYCLOAK_HOST}", "--hostname-strict=true"]
     ports:
       - "${KEYCLOAK_PORT}:${KEYCLOAK_PORT}"
     networks:
