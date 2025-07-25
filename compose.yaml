@@ -41,6 +41,42 @@ services:
     networks:
       - carfactory-employees-network
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    environment:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: ${KEYCLOAK_PORT}
+      KC_HOSTNAME_STRICT: "true"
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: info
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 2 bash -c '</dev/tcp/localhost/${KEYCLOAK_PORT}'"]
+      interval: 15s
+      timeout: 5s
+      retries: 15
+      start_period: 60s
+    command: ["start-dev", "--http-port", "${KEYCLOAK_PORT}", "--hostname", "${KEYCLOAK_HOST}", "--hostname-strict=true"]
+    ports:
+      - "${KEYCLOAK_PORT}:${KEYCLOAK_PORT}"
+    networks:
+      - carfactory-employees-network
+
+  keycloak-init:
+    image: curlimages/curl:latest
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - ./keycloak-init.sh:/init.sh:ro
+    command: ["/bin/sh", "/init.sh"]
+    networks:
+      - carfactory-employees-network
+
   api:
     build:
       context: .
@@ -54,6 +90,13 @@ services:
       - AppSettingsConfiguration__RabbitMq__Username=${RABBITMQ_USER}
       - AppSettingsConfiguration__RabbitMq__Password=${RABBITMQ_PASSWORD}
       - AppSettingsConfiguration__Contracts__FactoriesQueue=${FACTORY_QUEUE}
+      - Keycloak__Host=${KEYCLOAK_HOST}
+      - Keycloak__Port=${KEYCLOAK_PORT}
+      - Keycloak__Realm=${KEYCLOAK_REALM}
+      - Keycloak__Audience=${KEYCLOAK_AUDIENCE}
+      - Keycloak__ClientId=${KEYCLOAK_CLIENT_ID}
+      - Keycloak__ClientSecret=${KEYCLOAK_CLIENT_SECRET}
+      - Keycloak__GrantType=${KEYCLOAK_GRANT_TYPE}
     ports:
       - "${API_PORT}:${API_PORT}"
     depends_on:
@@ -61,6 +104,10 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+      keycloak:
+        condition: service_healthy
+      keycloak-init:
+        condition: service_completed_successfully
     networks:
       - carfactory-employees-network
 

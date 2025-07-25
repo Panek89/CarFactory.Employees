@@ -2,11 +2,13 @@
 using CarFactory.Employees.Application.Features.EmployeeRequests.Queries;
 using CarFactory.Employees.Contracts.DTOs.EmployeeRequests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarFactory.Employees.API.Controllers
 {
     [Route("api/employee-requests")]
+    [Authorize]
     [ApiController]
     public class EmployeeRequestsController : ControllerBase
     {
@@ -30,8 +32,6 @@ namespace CarFactory.Employees.API.Controllers
         {
             return await _mediator.Send(new GetActualRequestesDetailsQuery(), cancellationToken);
         }
-
-
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

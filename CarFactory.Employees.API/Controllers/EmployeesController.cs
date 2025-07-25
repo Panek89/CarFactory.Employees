@@ -2,11 +2,13 @@ using CarFactory.Employees.Application.Features.Employees.Queries;
 using CarFactory.Employees.Contracts.DTOs.Employees;
 using CarFactory.Employees.Domain.ValueObjects;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarFactory.Employees.API.Controllers
 {
     [Route("api/employees")]
+    [Authorize]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
