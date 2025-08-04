@@ -20,6 +20,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IEmployeeRequestRepository, EmployeeRequestRepository>();
         services.AddScoped<IEmployeeRequestCandidateRepository, EmployeeRequestCandidateRepository>();
+        services.AddScoped<IFactoryRepository, FactoryRepository>();
 
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IEmployeeRequestService, EmployeeRequestService>();
