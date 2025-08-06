@@ -14,6 +14,7 @@ public class FactoryConfiguration : IEntityTypeConfiguration<Factory>
 
         builder.Property(p => p.FactoryId).IsRequired();
         builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
+        builder.Property(p => p.IsOpen).IsRequired().HasDefaultValue(true);
 
         builder.BaseEntityConfiguration();
     }
