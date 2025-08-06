@@ -22,11 +22,12 @@ public class FactoryCreatedConsumer : IConsumer<IFactoryCreated>
         {
             FactoryId = message.Id,
             Name = message.Name,
+            IsOpen = message.IsOpen
         }.SetInitialMetaData();
 
         await _factoryRepository.AddAsync(factory, context.CancellationToken);
         await _factoryRepository.SaveChangesAsync(context.CancellationToken);
 
-        Console.WriteLine($"New Fabric created: {message.Name} with number of employees: {message.NumberOfEmployees}");
+        Console.WriteLine($"New Factory created: {message.Name} ");
     }
 }
