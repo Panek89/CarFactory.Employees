@@ -43,6 +43,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddMassTransit(conf =>
         {
             conf.AddConsumer<FactoryCreatedConsumer>();
+            conf.AddConsumer<FactoryUpdatedConsumer>();
             conf.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host(configuration.RabbitMq.HostName, "/", h =>
@@ -54,6 +55,7 @@ public static class InfrastructureServiceCollectionExtensions
                 cfg.ReceiveEndpoint(configuration.Contracts.FactoriesQueue, e =>
                 {
                     e.ConfigureConsumer<FactoryCreatedConsumer>(context);
+                    e.ConfigureConsumer<FactoryUpdatedConsumer>(context);
                 });
             });
         });
