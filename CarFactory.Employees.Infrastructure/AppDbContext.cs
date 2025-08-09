@@ -1,4 +1,5 @@
 ﻿using CarFactory.Employees.Domain.Common;
+using CarFactory.Employees.Domain.Entities;
 using CarFactory.Employees.Domain.Models;
 using CarFactory.Employees.Domain.ValueObjects;
 using CarFactory.Employees.Infrastructure.Converters;
@@ -61,4 +62,5 @@ public class AppDbContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<EmployeeRequest> EmployeeRequests { get; set; }
     public DbSet<EmployeeRequestCandidate> EmployeeRequestCandidates { get; set; }
+    public DbSet<Factory> Factories { get; set; }
 }

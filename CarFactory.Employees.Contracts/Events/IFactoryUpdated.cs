@@ -1,6 +1,6 @@
 namespace CarFactory.Employees.Contracts.Events;
 
-public interface IFactoryCreated
+public interface IFactoryUpdated
 {
     public Guid Id { get; }
     public string Name { get; }

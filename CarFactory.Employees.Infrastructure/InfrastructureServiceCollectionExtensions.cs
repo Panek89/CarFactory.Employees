@@ -20,6 +20,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IEmployeeRequestRepository, EmployeeRequestRepository>();
         services.AddScoped<IEmployeeRequestCandidateRepository, EmployeeRequestCandidateRepository>();
+        services.AddScoped<IFactoryRepository, FactoryRepository>();
 
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IEmployeeRequestService, EmployeeRequestService>();
@@ -42,6 +43,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddMassTransit(conf =>
         {
             conf.AddConsumer<FactoryCreatedConsumer>();
+            conf.AddConsumer<FactoryUpdatedConsumer>();
             conf.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host(configuration.RabbitMq.HostName, "/", h =>
@@ -53,6 +55,7 @@ public static class InfrastructureServiceCollectionExtensions
                 cfg.ReceiveEndpoint(configuration.Contracts.FactoriesQueue, e =>
                 {
                     e.ConfigureConsumer<FactoryCreatedConsumer>(context);
+                    e.ConfigureConsumer<FactoryUpdatedConsumer>(context);
                 });
             });
         });

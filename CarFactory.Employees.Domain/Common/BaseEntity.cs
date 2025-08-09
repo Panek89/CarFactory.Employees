@@ -8,4 +8,19 @@ public abstract class BaseEntity
     public string CreatedBy { get; set; } = null!;
     public DateTime? UpdatedAt { get; set; }
     public string? UpdatedBy { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null || obj.GetType() != GetType())
+        {
+            return false;
+        }
+
+        return ((BaseEntity)obj).Id == Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
 }
